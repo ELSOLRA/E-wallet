@@ -12,8 +12,8 @@ import HomePage from './pages/HomePage';
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
     < Route path='/' element={<HomePage />} />
-    < Route path='/' element={<ErrorPage />} />
-    < Route path='/' element={<AddCardPage />} />
+    < Route path='/error' element={<ErrorPage />} />
+    < Route path='/add-card' element={<AddCardPage />} />
   </Route>
 )
   // <Route>

@@ -1,8 +1,11 @@
+import CardForm from "../components/cardForm/CardForm"
 
 
 const AddCardPage = () => {
   return (
-    <div>AddCardPage</div>
+    <div>
+      <CardForm />
+    </div>
   )
 }
 

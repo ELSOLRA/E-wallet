@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
 
 
 const HomePage = () => {
   return (
-    <div>homepage</div>
+    <div>homepage
+    <button>
+    <Link to="/add-card"> Add-cart </Link>
+    </button>
+    </div>
   )
 }
 
