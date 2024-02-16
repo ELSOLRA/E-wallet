@@ -25,6 +25,16 @@ Arbetsupplägg
 	Vi kommer att dela upp arbete på daily-standup och planera dagen.
 	Sedan sammanstråla på kvällen och stämma av hur det går.
 
+Komponenter
+-- Src
+|   |-- components
+|   |   |-- Top.jsx = Samma för båda kort
+|   |   |-- Card.jsx = Samma för båda kort
+|   |	|-- Stack.jsx = Unik för Home
+|   |   |-- Buttton.jsx = Samma för båda
+|   |   |-- Form.jsx Unik för AddCard --> Paulus
+Errorpage --> Egil
+
 
 CSS 
 
