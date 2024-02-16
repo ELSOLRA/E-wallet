@@ -1,6 +1,6 @@
 # Grupparbete
 
-
+```
 Grupp medlemmar:
    Egil Ramsten
    Johan Skoog
@@ -52,6 +52,8 @@ CSS
    font på form: PT mono
    	size: 18px 12px
    	weight 400
+
+```    
 
 # React + TypeScript + Vite
 
