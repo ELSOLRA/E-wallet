@@ -26,24 +26,6 @@ Arbetsupplägg
 	Sedan sammanstråla på kvällen och stämma av hur det går.
 
 
-
-
-	Varje .tsx-fil kommer ha sin egen .scss-fil.
-
-App/
-	Pages/
-		Homepage
-		AddCardpage
-		Errorpage		
-	Components/
-		Top
-		Card - cardsdesigns i .scss-filen
-		Cardstack
-			Card
-		CardForm
-	assets/
-		Icons
-
 CSS 
 
 	width 414px
