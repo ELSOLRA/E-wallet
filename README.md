@@ -16,7 +16,7 @@ Grupp medlemmar:
 	Johan Skoog
 	Paulus Kamuntavicius
 	Philip Rasmussen
-	Amelie Salomonsen?
+	Amelie Salomonsen
 
 Arbetsupplägg
 	Daily stand-up 10:00
