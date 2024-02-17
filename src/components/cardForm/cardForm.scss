@@ -1,0 +1,18 @@
+.card-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px; 
+    margin: auto; 
+  
+    &__label {
+      margin-bottom: .5rem;
+      font-weight: bold;
+    }
+  
+    &__input {
+      width: 100%;
+      padding: .5rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+}
