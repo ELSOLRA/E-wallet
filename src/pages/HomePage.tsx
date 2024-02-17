@@ -1,8 +1,10 @@
-
+import Card from "../components/card/Card";
 
 const HomePage = () => {
   return (
-    <div>homepage</div>
+    <div>
+      < Card />
+    </div>
   )
 }
 
