@@ -9,20 +9,13 @@ import AddCardPage from './pages/AddCardPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 
-const router = createBrowserRouter(createRoutesFromElements(
-  <Route>
-    < Route path='/' element={<HomePage />} />
-    < Route path='/' element={<ErrorPage />} />
-    < Route path='/' element={<AddCardPage />} />
-  </Route>
-)
-  // <Route>
-  //   {/* <Route path="/" element={<RootLayout />}> */}
-  //     <Route index element={<HomePage />} />
-  //     <Route path="/pages" element={<AddCardPage/>} />
-  //     <Route path="/pages" element={<ErrorPage />} />
-  //  {/* </Route>  */}
-  // </Route>
+const router = createBrowserRouter(
+    createRoutesFromElements(
+    <Route errorElement={<ErrorPage />}>
+      < Route path='/' element={<HomePage />} />
+      < Route path='/addcard' element={<AddCardPage />} />
+    </Route>
+    )
 )
 
 function App() {

@@ -1,0 +1,71 @@
+/* #region "errorpage" */
+.pt-mono-regular {
+    font-family: "PT Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+.error--liner {
+    margin: auto;
+    max-width: 414px;
+    height: auto;
+    padding: 2rem;
+    background: repeating-linear-gradient(
+        -45deg,
+        #000,
+        #000 20px,
+        #ffb101 20px,
+        #ffb101 40px
+    );
+}
+.error--wrapper__big {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+}
+.error--headline {
+    font-family: "PT Mono", monospace;
+    font-size: 1.5rem;
+}
+.error--wrapper__small {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.error--code {
+    font-family: "PT Mono", monospace;
+    font-size: 1rem;
+    margin: 0;
+}
+.error--type {
+    font-family: "PT Mono", monospace;
+    font-size: 2rem;
+    margin: 0;
+}
+.error--return {
+    font-family: "PT Mono", monospace;
+    border: solid 2px black;
+    padding: 1rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: white;
+    background-color: #000;
+}
+.error--return:active {
+    background-color: grey;
+    color: #000;
+}
+.error--img {
+    width: auto;
+    height: auto;
+}
+.error--message {
+    font-family: "PT Mono", monospace;
+    font-size: 1rem;
+    background-color: grey;
+    color: #000;
+    padding: .5rem;
+    border-radius: .5rem;
+}
+/* #endregion "errorpage" */ 
