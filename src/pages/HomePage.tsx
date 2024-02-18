@@ -3,7 +3,7 @@ import Card from "../components/card/Card";
 const HomePage = () => {
   return (
     <div>
-      < Card />
+      < Card index={2}/>
     </div>
   )
 }

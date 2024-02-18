@@ -1,52 +1,31 @@
+import './card.scss'
+import vendors from '../../assets/data/vendors'
+import Cards from '../../assets/data/StoreCards'
 
+const Card = ({ index }: any) => {
 
-const Card = () => {
-
-    const myCard = {
-        firstName: 'Egil',
-        lastName: 'Ramsten',
-        number: 1234567812345678,
-        valid: '05/32',
-        vendor: 'Ninja Bank',
-        id: 1,
-        CCV: 123
-    }
-
-    const vendors = [
-        { name: 'Ninja Bank' , icon:'./src/assets/icons/Ninjalogo.svg', color: 'rgba(34, 34, 34, 1)' },
-        { name: 'Bitcoin INC', icon: './src/assets/icons/Bitcoinlogo.svg', color: 'rgba(255, 174, 52, 1)'},
-        { name: 'Block Chain INC', icon: './src/assets/icons/chainlogo.svg', color: 'rgba(139, 88, 249, 1)' },
-        { name: 'Evil Corp', icon: './src/assets/icons/Evillogo.svg', color: 'rgba(243, 51, 85, 1)'}
-    ]
-
-    function CardIcon() {
-        let activeIcon = ''
-        for ( let i = 0; i < vendors.length; i++) {
-            if (vendors[i].name == myCard.vendor) {
-                activeIcon = vendors[i].icon
-            }
-        }
-        return (
-           <>
-           <img src={activeIcon} alt="" />
-           </>
-        )
-    }
+    const myCard = Cards[index]
+    const myVendor = vendors.find(({ name }) => name === myCard.vendor)
 
     return (
-        <div className="card--wrapper">
+        <div className="card--wrapper" style={{backgroundColor: `${myVendor.cardColor}`}}>
             <div className="card--icons">
-                <img src='/src/assets/icons/chip.svg' alt="chip icon" />
-                <CardIcon />
+                <img className="card--img__chips" src='/src/assets/icons/chip.svg' alt="chip icon" />
+                <img className='card--img__icon' src={`${myVendor.icon}`} />
             </div>
-            <h1 className="card--number">{myCard.number}</h1>
+            <h1 className="card--number">{
+            `${myCard.number[0]}${myCard.number[1]}${myCard.number[2]}${myCard.number[3]} 
+            ${myCard.number[4]}${myCard.number[5]}${myCard.number[6]}${myCard.number[7]} 
+            ${myCard.number[8]}${myCard.number[9]}${myCard.number[10]}${myCard.number[11]} 
+            ${myCard.number[12]}${myCard.number[13]}${myCard.number[14]}${myCard.number[15]}`
+            }</h1>
             <div className="card--info">
                 <div className='card--info__top'>
                     <p>CARDHOLDER NAME</p>
-                    <p>{myCard.firstName} {myCard.lastName}</p>
+                    <p>VALID THRU</p>
                 </div>
                 <div className='card--info__bottom'>
-                    <p>VALID THRU</p>
+                    <p>{myCard.firstName} {myCard.lastName}</p>
                     <p>{myCard.valid}</p>
                 </div>
             </div>

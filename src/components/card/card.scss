@@ -1,1 +1,53 @@
 
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.card--wrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 382px;
+    height: 241px;
+    background-color: black;
+    font-family: 'PT Mono';
+    color: white;
+    justify-content: space-around;
+}
+.card--icons {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+.card--img__chips {
+    align-self: flex-end;
+}
+.card--img__icon {
+    align-self: flex-start;
+}
+.card--number {
+    font-size: 29px;
+    letter-spacing: .2rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0 auto 0 auto;
+    width: 350px;
+}
+.card--info {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+.card--info__top {
+   display: flex;
+   justify-content: space-between;
+   font-size: 12px;
+}
+.card--info__bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
