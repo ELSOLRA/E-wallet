@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Top from "../components/top/Top";
 
 
 const HomePage = () => {
@@ -6,6 +7,7 @@ const HomePage = () => {
     <div>homepage
     <button>
     <Link to="/add-card"> Add-cart </Link>
+    <Top />
     </button>
     </div>
   )

@@ -1,4 +1,3 @@
-
 import { 
   createBrowserRouter,
   createRoutesFromElements,
@@ -8,12 +7,18 @@ import {
 import AddCardPage from './pages/AddCardPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
+//Import av komponenterna
+import Top from './components/top/Top';
+import Button from './components/button/Button';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
     < Route path='/' element={<HomePage />} />
     < Route path='/error' element={<ErrorPage />} />
     < Route path='/add-card' element={<AddCardPage />} />
+
+    < Route path='/top' element={<Top />} />
+    < Route path='/button' element={<Button />} />
   </Route>
 )
   // <Route>
@@ -26,7 +31,6 @@ const router = createBrowserRouter(createRoutesFromElements(
 )
 
 function App() {
-
   return (
     <>
       < RouterProvider router={router} />
