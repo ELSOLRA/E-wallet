@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div>homepage
     <button>
-      <Link to="/add-card"> Add-cart </Link>
+      <Link to="/addcard"> Add-cart </Link>
     </button>
       < Card index={0}/>
     </div>
