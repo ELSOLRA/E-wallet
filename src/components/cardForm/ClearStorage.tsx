@@ -1,9 +1,13 @@
 
+type ClearLocalStorageButtonProps = {
+  onClear: () => void;
+};
 
-const ClearLocalStorageButton = () => {
+const ClearLocalStorageButton: React.FC<ClearLocalStorageButtonProps> = ({ onClear }) => {
   const handleClearLocalStorage = () => {
     localStorage.clear();
-    console.log('Local storage cleared!');
+    console.log('Local storage is cleared!!!');
+    onClear();
   };
 
   return (
