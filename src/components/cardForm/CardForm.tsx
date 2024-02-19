@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
 import ClearLocalStorageButton from "./ClearStorage";
+import vendors from "../../assets/data/vendors";
+
 
 type FormData = {
   id: number;
@@ -11,7 +13,10 @@ type FormData = {
   vendor: string;
 };
 
-const vendorList = ["bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
+
+const vendorList = vendors.map((vendor)=> vendor.name)
+
+// const vendorList = ["Bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
 
 type Props = {};
 
@@ -323,6 +328,7 @@ const handleClearLocalStorage = () => {
       </button>
 
     </form>
+
 
     {submittedForms.map((form) => (
       <div key={form.id}>
