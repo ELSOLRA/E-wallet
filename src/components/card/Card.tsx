@@ -5,7 +5,7 @@ import Cards from '../../assets/data/StoreCards'
 const Card = ({ index }: any) => {
 
     const myCard = Cards[index]
-    const myVendor = vendors.find(({ name }) => name === myCard.vendor)
+    const myVendor: any = vendors.find(({ name }) => name === myCard.vendor)
 
     return (
         <div className="card--wrapper" style={{backgroundColor: `${myVendor.cardColor}`}}>
