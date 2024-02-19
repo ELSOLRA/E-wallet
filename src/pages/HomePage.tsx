@@ -1,5 +1,6 @@
 import Card from "../components/card/Card";
 import { Link } from "react-router-dom";
+import StoredForms from "../components/cardForm/StoredForms";
 
 const HomePage = () => {
   return (
@@ -8,6 +9,7 @@ const HomePage = () => {
       <Link to="/add-card"> Add-cart </Link>
     </button>
       < Card index={0}/>
+      < StoredForms />
     </div>
   )
 }
