@@ -1,17 +1,16 @@
+import Button from "../components/button/Button";
 import Card from "../components/card/Card";
-import { Link } from "react-router-dom";
-import StoredForms from "../components/cardForm/StoredForms";import Top from "../components/top/Top";
+// import CardStack from "../components/cardStack/CardStack";
+import Top from "../components/top/Top";
 
 
 const HomePage = () => {
   return (
-    <div>homepage
-    <button>
-    <Link to="/add-card"> Add-cart </Link>
-    <Top />
-    </button>
-      < Card index={0}/>
-      < StoredForms />
+    <div>
+      <Top headline='E-WALLET'  cardType='ACTIVE CARD' />
+      <Card index={0}/>
+      {/* <CardStack /> */}
+      <Button title='ADD A NEW CARD'/>
     </div>
   )
 }

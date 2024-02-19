@@ -11,7 +11,7 @@ type FormData = {
   vendor: string;
 };
 
-const vendorList = ["bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
+const vendorList = ['Bitcoin INC', 'Ninja Bank', 'Block Chain INC', 'Evil Corp'];
 
 type Props = {};
 

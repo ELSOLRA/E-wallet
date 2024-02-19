@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
 import Button from '../button/Button';
+import { useNavigate } from 'react-router-dom';
+import Card from '../card/Card';
+
+
+
 
 console.log('Top imported')
 
 //Definition av functionell component
-const Top: React.FC = () => {
+const Top: React.FC<{headline: string; cardType: string}> = ({headline, cardType}) => {
     //Definition av useState Hooken och startvärdet
-    const [text, setText] = useState('E-WALLET');
+   
+
+    // const gotoAddCard = useNavigate();
 
     //Function som byter texten när knappen trycks
-    const changeText = () => {
-        setText('ADD A NEW BANK CARD');
-    };
+    // const changeText = () => {
+    //     setText('ADD A NEW BANK CARD');
+    //     gotoAddCard('/addcard')
+    // };
     //Retunera JSX, h1 och button
     return (
-       <>
-            <h1 className='top-header'>{text}</h1>
-            <Button onClick={changeText} />
-            </>
+        <div>
+            <h1 className='top-header'>{headline}</h1>
+            <p className='card--type'>{cardType}</p>
+        </div>
     );
 };
 
