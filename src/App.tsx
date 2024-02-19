@@ -10,7 +10,8 @@ import HomePage from './pages/HomePage';
 import Top from './components/top/Top';
 import Button from './components/button/Button';
 
-const router = createBrowserRouter(createRoutesFromElements(
+const router = createBrowserRouter(
+  createRoutesFromElements(
   <Route errorElement={<ErrorPage />}>
     < Route path='/' element={<HomePage />} />
     < Route path='/addcard' element={<AddCardPage />} />

@@ -1,12 +1,17 @@
 import Card from "../components/card/Card";
-import Top from "../components/top/Top";
+import { Link } from "react-router-dom";
+import StoredForms from "../components/cardForm/StoredForms";import Top from "../components/top/Top";
 
 
 const HomePage = () => {
   return (
     <div>homepage
+    <button>
+    <Link to="/add-card"> Add-cart </Link>
     <Top />
-    < Card index={0}/>
+    </button>
+      < Card index={0}/>
+      < StoredForms />
     </div>
   )
 }
