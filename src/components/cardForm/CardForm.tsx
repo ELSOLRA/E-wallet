@@ -8,7 +8,10 @@ type FormData = {
   cardHolderName: string;
   validThru: string;
   ccv: string;
+  vendor: string;
 };
+
+const vendorList = ["bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
 
 type Props = {};
 
@@ -22,6 +25,7 @@ const CardForm: React.FC<Props> = (props: Props) => {
       cardHolderName: "", 
       validThru:"",
       ccv:"",
+      vendor:"",
     
     });
 
@@ -48,85 +52,74 @@ const CardForm: React.FC<Props> = (props: Props) => {
 
     
     
-    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
 
       const { name, value } = event.target;
       
       
-     if (name === 'cardnumber') {
-      
-      const formattedCardNumber = value.replace(/\D/g, '');  // we can use .slice(0, 16) if we don't have maxLength={16} on input   
-      setFormData((prevFormData: FormData) => ({ 
-        ...prevFormData,
-        [name]: formattedCardNumber 
-      }));
-      setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-        ...prevDuplicatedFormData!,
-        [name]: formattedCardNumber.replace(/(.{4})/g, '$1 '),
-      }));
-      
-    } else if (name === 'cardHolderName' ) {
-
-      const formattedCardName = value.replace(/\d/g, '').toUpperCase();
-     
-
-        setFormData((prevFormData: FormData) => ({ 
-        ...prevFormData,
-        [name]: formattedCardName,
-      }));
-      setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-        ...prevDuplicatedFormData!,
-        [name]: formattedCardName,
-      }));
-   }
-    
-    
-    else if (name === 'validThru') {
- 
-
-        const formattedValidThru = value.replace(/\D/g, '');
-    
+      if (name === 'vendor') {
         setFormData((prevFormData: FormData) => ({
           ...prevFormData,
-          [name]: formattedValidThru,
-        }));
-    
-        setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-          ...prevDuplicatedFormData!,
-          [name]: formattedValidThru,
-        }));
-      } 
-    
-    else if (name === 'ccv') {
-        
-        const formattedCcvNumber = value.replace(/\D/g, ''); ; //  or parseInt(value, 10)
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: formattedCcvNumber,
-        }));
-        setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-          ...prevDuplicatedFormData!,
           [name]: value,
-        })); 
-
+        }));
       } else {
-
-      setFormData((prevFormData: FormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
- 
-  setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-    ...prevDuplicatedFormData!,
-    [name]: value,
-  }));
-}
-  setFormErrors((prevFormErrors) => ({
-    ...prevFormErrors,
-    [name]: "",
-  }));
-}
-
+        if (name === 'cardnumber') {
+          const formattedCardNumber = value.replace(/\D/g, '');  
+          setFormData((prevFormData: FormData) => ({ 
+            ...prevFormData,
+            [name]: formattedCardNumber 
+          }));
+          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+            ...prevDuplicatedFormData!,
+            [name]: formattedCardNumber.replace(/(.{4})/g, '$1 '),
+          }));
+        } else if (name === 'cardHolderName') {
+          const formattedCardName = value.replace(/\d/g, '').toUpperCase();
+          setFormData((prevFormData: FormData) => ({ 
+            ...prevFormData,
+            [name]: formattedCardName,
+          }));
+          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+            ...prevDuplicatedFormData!,
+            [name]: formattedCardName,
+          }));
+        } else if (name === 'validThru') {
+          const formattedValidThru = value.replace(/\D/g, '');
+          setFormData((prevFormData: FormData) => ({
+            ...prevFormData,
+            [name]: formattedValidThru,
+          }));
+          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+            ...prevDuplicatedFormData!,
+            [name]: formattedValidThru,
+          }));
+        } else if (name === 'ccv') {
+          const formattedCcvNumber = value.replace(/\D/g, '');
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: formattedCcvNumber,
+          }));
+          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+            ...prevDuplicatedFormData!,
+            [name]: value,
+          }));
+        } else {
+          setFormData((prevFormData: FormData) => ({
+            ...prevFormData,
+            [name]: value,
+          }));
+          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+            ...prevDuplicatedFormData!,
+            [name]: value,
+          }));
+        }
+    
+        setFormErrors((prevFormErrors) => ({
+          ...prevFormErrors,
+          [name]: "",
+        }));
+      }
+    }
 
 
 function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
@@ -168,6 +161,14 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     return;
   }
   
+  if (!formData.vendor) {
+    setFormErrors((prevFormErrors) => ({
+      ...prevFormErrors,
+      vendor: "Please select a vendor",
+    }));
+    return;
+  }
+
   const numericCardNumber = Number(formData.cardnumber);
   const numericCcv = Number(formData.ccv);
 
@@ -196,13 +197,20 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     cardHolderName: "",
     validThru: "",
     ccv: "",
+    vendor: "",
   }));
 
    setFormId((prevFormId) => prevFormId + 1);
    
    setDuplicatedFormData(null);
+   setFormErrors({});
 
 }
+
+const handleClearLocalStorage = () => {
+  setSubmittedForms([]); // Clear submitted forms
+};
+
 
 /* function formatCardNumber(cardNumber: string): string {
   const formattedNumber = cardNumber.replace(/(.{4})/g, '$1 ');
@@ -288,6 +296,28 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
               <span className="error-message">{formErrors.ccv}</span>
             )}
       </label>
+
+      <label className="card-form__label" htmlFor="vendor">
+          Select a Vendor
+          <select
+            className="card-form__select"
+            name="vendor"
+            id="vendor"
+            value={formData.vendor}
+            onChange={handleChange}
+          >
+            <option value=""></option>
+            {vendorList.map((vendor, index) => (
+              <option key={index} value={vendor}>
+                {vendor}
+              </option>
+            ))}
+          </select>
+          {formErrors.vendor && (
+              <span className="error-message">{formErrors.vendor}</span>
+            )}
+        </label>
+
       <button className="card-form__submit" type="submit">
         Submit this!
       </button>
@@ -301,10 +331,11 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
         <p>Card Holder Name: {form.cardHolderName}</p>
         <p>Valid Thru: {form.validThru}</p>
         <p>CCV: {form.ccv}</p>
+        <p>Vendor: {form.vendor}</p>
       </div>
     ))}
 
-    <ClearLocalStorageButton />
+    <ClearLocalStorageButton onClear={handleClearLocalStorage}/>
   </section>
   )
 }
