@@ -26,7 +26,6 @@ const CardForm: React.FC<Props> = (props: Props) => {
       validThru:"",
       ccv:"",
       vendor:"",
-    
     });
 
     // const [ccvError, setCcvError] = useState<string | null>(null);

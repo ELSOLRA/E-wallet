@@ -3,12 +3,8 @@ import vendors from '../../assets/data/vendors'
 
 const Card = ({ index }: any) => {
 
-    const data = localStorage.getItem('forms')
-    const cards = data ? JSON.parse(data) : [];
-    const myCard = cards[index]
+    const myCard = index
     const myVendor: any = vendors.find(({ name }) => name === myCard.vendor) 
-    console.log(myVendor);
-    console.log(myCard);
 
     return (
         <div className="card--wrapper" style={{backgroundColor: `${myVendor.cardColor}`}}>
