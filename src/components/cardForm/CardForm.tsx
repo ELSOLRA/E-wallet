@@ -2,9 +2,10 @@ import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
 import ClearLocalStorageButton from "./ClearStorage";
 import vendors from "../../assets/data/vendors";
+import CardDisplay from "./CardDisplay";
 
 
-type FormData = {
+export type FormData = {
   id: number;
   cardnumber: string;
   cardHolderName: string;
@@ -13,16 +14,17 @@ type FormData = {
   vendor: string;
 };
 
-
-const vendorList = vendors.map((vendor)=> vendor.name)
+// const cardColour = vendors.map((vendor)=> vendor.cardColor)
+/* const cardIcon = vendors.map((vendor)=> vendor.icon)
+const vendorList = vendors.map((vendor)=> vendor.name) */
 
 // const vendorList = ["Bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
 
-type Props = {};
+
 
 const MAX_SUBMISSIONS = 4;
 
-const CardForm: React.FC<Props> = (props: Props) => {
+const CardForm: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({ 
       id: 1,
@@ -40,6 +42,7 @@ const CardForm: React.FC<Props> = (props: Props) => {
     const [duplicatedFormData, setDuplicatedFormData] = useState<FormData | null>(null);
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     /* const [submitted, setSubmitted] = useState<boolean>(false); */
+    const [selectedVendor, setSelectedVendor] = useState<string>('');
 
     useEffect(() => {
       // Retrieve the last form ID from local storage
@@ -52,9 +55,10 @@ const CardForm: React.FC<Props> = (props: Props) => {
       if (storedForms) {
         const parsedForms: FormData[] = JSON.parse(storedForms);
         setSubmittedForms(parsedForms);
+        console.log('forms in storage - ',storedForms  )
       }
     }, [formId]);
-
+    
     
     
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
@@ -63,10 +67,12 @@ const CardForm: React.FC<Props> = (props: Props) => {
       
       
       if (name === 'vendor') {
+        //   Updating only the vendor property in the form data
         setFormData((prevFormData: FormData) => ({
           ...prevFormData,
           [name]: value,
         }));
+        setSelectedVendor(value);
       } else {
         if (name === 'cardnumber') {
           const formattedCardNumber = value.replace(/\D/g, '');  
@@ -76,7 +82,7 @@ const CardForm: React.FC<Props> = (props: Props) => {
           }));
           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
-            [name]: formattedCardNumber.replace(/(.{4})/g, '$1 '),
+            [name]: formattedCardNumber      //.replace(/(.{4})/g, '$1 ')
           }));
         } else if (name === 'cardHolderName') {
           const formattedCardName = value.replace(/\d/g, '').toUpperCase();
@@ -96,7 +102,7 @@ const CardForm: React.FC<Props> = (props: Props) => {
           }));
           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
-            [name]: formattedValidThru,
+            validThru: formattedValidThru.replace(/(\d{2})(\d{2})/, '$1/$2'),
           }));
         } else if (name === 'ccv') {
           const formattedCcvNumber = value.replace(/\D/g, '');
@@ -225,9 +231,144 @@ const handleClearLocalStorage = () => {
   return (
 
     <section className="wrapper">
-    
 
-    {duplicatedFormData && (
+
+
+
+      {/*  <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? vendors.find(vendor => vendor.name === selectedVendor)?.cardColor : '' }}>
+            <div className="card--icons">
+                <img className="card--img__chips" 
+                src='/src/assets/icons/chip.svg' alt="chip icon" />
+                <img className='card--img__icon' 
+                src={`${selectedVendor ? vendors.find(vendor => vendor.name === selectedVendor)?.icon : './src/assets/icons/cryptocurrency.svg'}`} />
+            </div>
+            <h1 className="card--number">
+              {duplicatedFormData? duplicatedFormData.cardnumber
+              .padEnd(16, 'X')
+              .replace(/(.{4})/g, '$1 ')
+              : 'XXXX XXXX XXXX XXXX'}
+            </h1>
+
+            <div className="card--info">
+                <div className='card--info__top'>
+                    <p>CARDHOLDER NAME</p>
+                    <p>VALID THRU</p>
+                </div>
+                <div className='card--info__bottom'>
+                  <p>{duplicatedFormData? duplicatedFormData.cardHolderName : 'FIRSTNAME LASTNAME'}</p>
+                  <p>{duplicatedFormData? duplicatedFormData.validThru : 'MM/YY'}</p>
+                </div>
+            </div>
+        </div>
+ */}
+
+      <CardDisplay cardData={duplicatedFormData} selectedVendor={selectedVendor} />
+
+      <form className="card-form" action="" onSubmit={handleSubmit}>
+        <label className="card-form__label" htmlFor="cardnumber">
+          Card number
+          <input
+            className="card-form__input"
+            type="text"
+            name="cardnumber"
+            id="cardnumber"
+            value={formData.cardnumber}
+            onChange={handleChange}
+            maxLength={16}   //maxLength attribute to limit input
+          />
+          {formErrors.cardnumber && (
+            <span className="error-message">{formErrors.cardnumber}</span>
+          )}
+        </label>
+        <label className="card-form__label" htmlFor="cardHolderName">
+          Card Holder Name
+          <input
+            className="card-form__input"
+            type="text"
+            name="cardHolderName"
+            id="cardHolderName"                 //  this id is used to connect the label and input
+            value={formData.cardHolderName}
+            onChange={handleChange}
+            placeholder="FIRSTNAME LASTNAME"
+            maxLength={25}
+
+          />
+          {formErrors.cardHolderName && (
+            <span className="error-message">{formErrors.cardHolderName}</span>
+          )}
+        </label>
+        <label className="card-form__label" htmlFor="validThru">
+          Valid thru
+          <input
+            className="card-form__input"
+            type="text"
+            name="validThru"
+            id="validThru"
+            value={formData.validThru}
+            onChange={handleChange}
+            placeholder="MMYY"
+            maxLength={4}
+          />
+          {formErrors.validThru && (
+            <span className="error-message">{formErrors.validThru}</span>
+          )}
+        </label>
+        <label className="card-form__label" htmlFor="ccv">
+          CCV
+          <input
+            className="card-form__input"
+            type="tel"    // type="tel" for a numeric input field on mobile
+            name="ccv"
+            id="ccv"
+            value={formData.ccv}
+            onChange={handleChange}
+            maxLength={3}
+          />
+          {formErrors.ccv && (
+            <span className="error-message">{formErrors.ccv}</span>
+          )}
+        </label>
+
+        <label className="card-form__label" htmlFor="vendor">
+          Select a Vendor
+          <select
+            className="card-form__select"
+            name="vendor"
+            id="vendor"
+            value={selectedVendor}
+            onChange={handleChange}
+          >
+            <option value=""></option>
+            {vendors.map((vendor, index) => (
+              <option key={index} value={vendor.name}>
+                {vendor.name}
+              </option>
+            ))}
+          </select>
+          {formErrors.vendor && (
+            <span className="error-message">{formErrors.vendor}</span>
+          )}
+        </label>
+
+        <button className="card-form__submit" type="submit">
+          Submit this!
+        </button>
+
+      </form>
+
+      <div className="localStorage-log">
+        {submittedForms.map((form) => (
+          <div key={form.id} className="localStorage-log__item">
+            <p>ID: {form.id}</p>
+            <p>Card Number: {form.cardnumber}</p>
+            <p>Card Holder Name: {form.cardHolderName}</p>
+            <p>Valid Thru: {form.validThru}</p>
+            <p>CCV: {form.ccv}</p>
+            <p>Vendor: {form.vendor}</p>
+          </div>
+        ))}
+      </div>
+      {/*  {duplicatedFormData && (
         <section className="card-data">
           <p>Card Data:</p>
           <p className="card__item card__item--number">Card Number: {duplicatedFormData.cardnumber}</p>
@@ -235,114 +376,15 @@ const handleClearLocalStorage = () => {
           <p className="card__item card__item--valid-thru">Valid Thru: {duplicatedFormData.validThru}</p>
           <p className="card__item card__item--ccv">CCV: {duplicatedFormData.ccv}</p>
         </section>
-      )}
-
-    <form className="card-form" action="" onSubmit={handleSubmit}>
-      <label className="card-form__label" htmlFor="cardnumber">
-        Card number
-        <input
-          className="card-form__input"
-          type="text"
-          name="cardnumber"
-          id="cardnumber"
-          value={formData.cardnumber}
-          onChange={handleChange}
-          maxLength={16}   //maxLength attribute to limit input
-        />
-        {formErrors.cardnumber && (
-              <span className="error-message">{formErrors.cardnumber}</span>
-            )}
-      </label>
-      <label className="card-form__label" htmlFor="cardHolderName">
-        Card Holder Name
-        <input
-          className="card-form__input"
-          type="text"
-          name="cardHolderName"
-          id="cardHolderName"                 //  this id is used to connect the label and input
-          value={formData.cardHolderName}
-          onChange={handleChange}
-          placeholder="FIRSTNAME LASTNAME"
-          maxLength={25}
-          
-        />
-        {formErrors.cardHolderName && (
-              <span className="error-message">{formErrors.cardHolderName}</span>
-            )}
-      </label>
-      <label className="card-form__label" htmlFor="validThru">
-        Valid thru
-        <input
-          className="card-form__input"
-          type="text"
-          name="validThru"
-          id="validThru"
-          value={formData.validThru}
-          onChange={handleChange}
-          placeholder="MMYY"
-          maxLength={4} 
-        />
-        {formErrors.validThru && (
-              <span className="error-message">{formErrors.validThru}</span>
-            )}
-      </label>
-      <label className="card-form__label" htmlFor="ccv">
-        CCV
-        <input
-          className="card-form__input"
-          type="tel"    // type="tel" for a numeric input field on mobile
-          name="ccv"
-          id="ccv"
-          value={formData.ccv === null ? '' : String(formData.ccv)}
-          onChange={handleChange}
-          maxLength={3} 
-        />
-         {formErrors.ccv && (
-              <span className="error-message">{formErrors.ccv}</span>
-            )}
-      </label>
-
-      <label className="card-form__label" htmlFor="vendor">
-          Select a Vendor
-          <select
-            className="card-form__select"
-            name="vendor"
-            id="vendor"
-            value={formData.vendor}
-            onChange={handleChange}
-          >
-            <option value=""></option>
-            {vendorList.map((vendor, index) => (
-              <option key={index} value={vendor}>
-                {vendor}
-              </option>
-            ))}
-          </select>
-          {formErrors.vendor && (
-              <span className="error-message">{formErrors.vendor}</span>
-            )}
-        </label>
-
-      <button className="card-form__submit" type="submit">
-        Submit this!
-      </button>
-
-    </form>
-
-
-    {submittedForms.map((form) => (
-      <div key={form.id}>
-        <p>ID: {form.id}</p>
-        <p>Card Number: {form.cardnumber}</p>
-        <p>Card Holder Name: {form.cardHolderName}</p>
-        <p>Valid Thru: {form.validThru}</p>
-        <p>CCV: {form.ccv}</p>
-        <p>Vendor: {form.vendor}</p>
+      )} */}
+      <div className="cards-display">
+        {submittedForms.map((form) => (
+          <CardDisplay key={form.id} cardData={form} selectedVendor={form.vendor} />
+        ))}
       </div>
-    ))}
 
-    <ClearLocalStorageButton onClear={handleClearLocalStorage}/>
-  </section>
+      <ClearLocalStorageButton onClear={handleClearLocalStorage} />
+    </section>
   )
 }
 
