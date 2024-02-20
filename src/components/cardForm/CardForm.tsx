@@ -39,7 +39,7 @@ const CardForm: React.FC = () => {
     // const [ccvError, setCcvError] = useState<string | null>(null);
     const [formId, setFormId] = useState<number>(1);
     const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
-    const [duplicatedFormData, setDuplicatedFormData] = useState<FormData | null>(null);
+    // const [duplicatedFormData, setDuplicatedFormData] = useState<FormData | null>(null);
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     /* const [submitted, setSubmitted] = useState<boolean>(false); */
     const [selectedVendor, setSelectedVendor] = useState<string>('');
@@ -80,49 +80,49 @@ const CardForm: React.FC = () => {
             ...prevFormData,
             [name]: formattedCardNumber 
           }));
-          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             [name]: formattedCardNumber      //.replace(/(.{4})/g, '$1 ')
-          }));
+          })); */
         } else if (name === 'cardHolderName') {
           const formattedCardName = value.replace(/\d/g, '').toUpperCase();
           setFormData((prevFormData: FormData) => ({ 
             ...prevFormData,
             [name]: formattedCardName,
           }));
-          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             [name]: formattedCardName,
-          }));
+          })); */
         } else if (name === 'validThru') {
           const formattedValidThru = value.replace(/\D/g, '');
           setFormData((prevFormData: FormData) => ({
             ...prevFormData,
             [name]: formattedValidThru,
           }));
-          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             validThru: formattedValidThru.replace(/(\d{2})(\d{2})/, '$1/$2'),
-          }));
+          })); */
         } else if (name === 'ccv') {
           const formattedCcvNumber = value.replace(/\D/g, '');
           setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: formattedCcvNumber,
           }));
-          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             [name]: value,
-          }));
+          })); */
         } else {
           setFormData((prevFormData: FormData) => ({
             ...prevFormData,
             [name]: value,
           }));
-          setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
+/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             [name]: value,
-          }));
+          })); */
         }
     
         setFormErrors((prevFormErrors) => ({
@@ -175,7 +175,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   if (!formData.vendor) {
     setFormErrors((prevFormErrors) => ({
       ...prevFormErrors,
-      vendor: "Please select a vendor",
+      vendor: "Please select vendor",
     }));
     return;
   }
@@ -213,7 +213,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 
    setFormId((prevFormId) => prevFormId + 1);
    
-   setDuplicatedFormData(null);
+  //  setDuplicatedFormData(null);
    setFormErrors({});
 
 }
@@ -262,7 +262,7 @@ const handleClearLocalStorage = () => {
         </div>
  */}
 
-      <CardDisplay cardData={duplicatedFormData} selectedVendor={selectedVendor} />
+      <CardDisplay cardData={formData} selectedVendor={selectedVendor} />
 
       <form className="card-form" action="" onSubmit={handleSubmit}>
         <label className="card-form__label" htmlFor="cardnumber">
