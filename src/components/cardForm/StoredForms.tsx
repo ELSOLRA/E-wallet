@@ -1,5 +1,7 @@
+import NewCard from "../card/NewCard";
 //Skapar en funktionell komponent
 const StoredForms: React.FC = () => {
+  
     // Hämta den sparade formulärdatan från localStorage med getItem med nyckeln forms
     const storedForms = localStorage.getItem("forms");
     //Ta datan från localstorage till en array av formdataObject, om det finns data- tas det fån JSON.parse, annars retuneras en tom array
@@ -16,17 +18,10 @@ const StoredForms: React.FC = () => {
       //Retunera JSX. Loopa igenom med map
     return (
       <div>
-        <h2>Stored Forms</h2>
         <ul>
-
           {parsedForms.map((form, index) => (
             <li key={index}>
-              <p>ID: {form.id}</p>
-              <p>Card Number: {form.cardnumber}</p>
-              <p>Card Holder Name: {form.cardHolderName}</p>
-              <p>Valid Thru: {form.validThru}</p>
-              <p>CCV: {form.ccv}</p>
-              <p>Vendor: {form.vendor}</p>
+              <NewCard formData={form} />
             </li>
           ))}
         </ul>
