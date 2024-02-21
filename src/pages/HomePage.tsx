@@ -10,7 +10,7 @@ const HomePage = () => {
     <div>
       <Top headline='E-WALLET'  cardType='ACTIVE CARD' />
       <Card index={cards[0]}/>
-      <CardStack var={cards}/> 
+      <CardStack cards={cards}/>
       <Button title='ADD A NEW CARD'/>
     </div>
   )

@@ -1,8 +1,6 @@
 import Button from "../components/button/Button"
 import CardForm from "../components/cardForm/CardForm"
-import { useState } from "react";
 import Top from "../components/top/Top";
-
 
 const AddCardPage = () => {
 
