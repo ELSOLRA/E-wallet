@@ -6,8 +6,8 @@ export const PlaceholderCard: FormData = {
     cardnumber: '0000000000000000',
     cardholder: 'FIRSTNAME LASTNAME',
     validThru: {        
-        expiremonth: '03',
-        expireyear: '24', 
+        expiremonth: 'MM',
+        expireyear: 'YY', 
         },
     CCV: '000'
 }
