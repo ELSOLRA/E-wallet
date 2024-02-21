@@ -1,8 +1,9 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
 // import ClearLocalStorageButton from "./ClearStorage";
+// import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
-import vendors from "../../assets/data/vendors";
+import { vendors } from "../../assets/data/vendors";
 import Card from "../card/Card";
 import { useNavigate } from "react-router";
 
