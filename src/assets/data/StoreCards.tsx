@@ -27,7 +27,8 @@ const Cards = [
         vendor: `${vendors[3].name}`,
         id: 3,
         CCV: 987
-    },
+    }
+    
 
 ]
 export default Cards

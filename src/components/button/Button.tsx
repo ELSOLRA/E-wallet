@@ -1,43 +1,14 @@
 // Button at the bottom of the pages.
+import { useNavigate } from "react-router-dom";
 
-//Tsx definition för onclick function/ ? = valfri / void = 
-type ButtonProps = { 
-    onClick?: () => void;
-}
+const Button: React.FC<{title: string}> = ({title}) => {
+    
+    const gotoAddCard = useNavigate();
+    const changeText = () => {  
+        gotoAddCard('/addcard')
+    };
 
-console.log('Button imported')
-
-//Definition av functional component/ dekonstruerad props parameter för att kunna extrahera Button
-const Button: React.FC<ButtonProps> = ({ onClick = () => {} }) => {
-    return <button className="card-button" onClick={onClick}>ADD A NEW CARD</button>;
+    return <button className="card-button" onClick={changeText}>{title}</button>;
 }
 
 export default Button;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Link } from 'react-router-dom';
-
-// const Button: React.FC = () => {
-//     return (
-//         <Link to="/add-card">ADD A NEW CARD</Link>
-//     );
-// };
-
-// export default Button;

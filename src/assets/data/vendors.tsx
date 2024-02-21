@@ -1,3 +1,5 @@
+
+
 const vendors = [
     { name: 'Ninja Bank' , icon:'./src/assets/icons/Ninjalogo.svg', cardColor: 'rgba(34, 34, 34, 1)', textColor: 'rgba(255, 255, 255, 1)' },
     { name: 'Bitcoin INC', icon: './src/assets/icons/Bitcoinlogo.svg', cardColor: 'rgba(255, 174, 52, 1)', textColor: 'rgba(0, 0, 0, 1)' },

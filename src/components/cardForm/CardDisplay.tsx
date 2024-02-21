@@ -1,24 +1,18 @@
 
 import vendors from '../../assets/data/vendors'; 
-import { FormData } from '../../assets/data/Types';
-import './card.scss'
+import { FormData } from './CardForm';
 
 
-export interface CardDisplayProps {
+interface CardDisplayProps {
     cardData: FormData | null;
-    selectedVendor?: string;
+    selectedVendor: string;
 }
 
-const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
+const CardDisplay: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
     const vendorInfo = selectedVendor
     ? vendors.find((vendor) => vendor.name === selectedVendor) || { cardColor: '', icon: '' }
     : { cardColor: '', icon: '' };
   const { cardColor, icon } = vendorInfo;
-
-
-
-
-
 
   return (
     <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? cardColor || '' : '' }}>
@@ -40,10 +34,10 @@ const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
           <p>VALID THRU</p>
         </div>
         <div className='card--info__bottom'>
-          <p>{cardData ? cardData.cardholder : 'FIRSTNAME LASTNAME'}</p>
+          <p>{cardData ? cardData.cardHolderName : 'FIRSTNAME LASTNAME'}</p>
           <p>
-            {cardData?.validThru.expiremonth || cardData?.validThru.expireyear? 
-            `${cardData?.validThru.expiremonth}/${cardData?.validThru.expireyear || 'YY'}`: 'MM/YY'}
+            {cardData?.validThru.month || cardData?.validThru.year? 
+            `${cardData?.validThru.month}/${cardData?.validThru.year || 'YY'}`: 'MM/YY'}
           </p>
         </div>
       </div>
@@ -51,4 +45,4 @@ const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
   );
 };
 
-export default Card;
+export default CardDisplay;
