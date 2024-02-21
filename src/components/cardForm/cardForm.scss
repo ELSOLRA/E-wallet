@@ -73,3 +73,23 @@
 .error-message {
   color: red;
 }
+
+.localStorage-log {
+
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+
+    &__item {
+      border: 1px solid black;
+      padding: .5rem;
+    }
+}
+
+.cards-display {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+  
+}
