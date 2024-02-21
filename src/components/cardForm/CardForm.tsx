@@ -11,9 +11,10 @@ type FormData = {
   vendor: string;
 };
 
+
 const vendorList = ["bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
 
-type Props = {};
+type Props =  {};
 
 const MAX_SUBMISSIONS = 4;
 
@@ -51,7 +52,8 @@ const CardForm: React.FC<Props> = (props: Props) => {
     }, [formId]);
 
     
-    
+ 
+
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
 
       const { name, value } = event.target;
