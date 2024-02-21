@@ -4,14 +4,7 @@ import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
 import vendors from "../../assets/data/vendors";
 import Card from "../card/Card";
-
-// const cardColour = vendors.map((vendor)=> vendor.cardColor)
-/* const cardIcon = vendors.map((vendor)=> vendor.icon)
-const vendorList = vendors.map((vendor)=> vendor.name) */
-
-// const vendorList = ["Bitcoin inc", "Ninja Bank", "Block chain INC", "Evil corp"];
-
-
+import { useNavigate } from "react-router";
 
 const MAX_SUBMISSIONS = 4;
 
@@ -26,15 +19,12 @@ const CardForm: React.FC = () => {
       expiremonth: '', 
       expireyear: '' 
       },
-    CCV: '0'
+    CCV: ''
     });
 
-    // const [ccvError, setCcvError] = useState<string | null>(null);
     const [formId, setFormId] = useState<number>(1);
     const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
-    // const [duplicatedFormData, setDuplicatedFormData] = useState<FormData | null>(null);
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-    /* const [submitted, setSubmitted] = useState<boolean>(false); */
     const [selectedVendor, setSelectedVendor] = useState<string>('');
 
     useEffect(() => {
@@ -73,20 +63,12 @@ const CardForm: React.FC = () => {
             ...prevFormData,
             [name]: formattedCardNumber 
           }));
-/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-            ...prevDuplicatedFormData!,
-            [name]: formattedCardNumber      //.replace(/(.{4})/g, '$1 ')
-          })); */
-        } else if (name === 'cardHolderName') {
+        } else if (name === 'cardholder') {
           const formattedCardName = value.replace(/\d/g, '').toUpperCase();
           setFormData((prevFormData: FormData) => ({ 
             ...prevFormData,
             [name]: formattedCardName,
           }));
-/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-            ...prevDuplicatedFormData!,
-            [name]: formattedCardName,
-          })); */
         } else if (name === 'validThru') {
           const formattedValidThru = value.replace(/\D/g, '');
 
@@ -97,29 +79,17 @@ const CardForm: React.FC = () => {
             ...prevFormData,
             [name]: { expiremonth, expireyear },
           }));
-/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-            ...prevDuplicatedFormData!,
-            validThru: formattedValidThru.replace(/(\d{2})(\d{2})/, '$1/$2'),
-          })); */
         } else if (name === 'CCV') {
           const formattedCcvNumber = value.replace(/\D/g, '');
           setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: formattedCcvNumber,
           }));
-/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-            ...prevDuplicatedFormData!,
-            [name]: value,
-          })); */
         } else {
           setFormData((prevFormData: FormData) => ({
             ...prevFormData,
             [name]: value,
           }));
-/*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
-            ...prevDuplicatedFormData!,
-            [name]: value,
-          })); */
         }
     
         setFormErrors((prevFormErrors) => ({
@@ -128,7 +98,6 @@ const CardForm: React.FC = () => {
         }));
       }
     }
-
 
 function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   
@@ -177,12 +146,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     return;
   }
 
-  // const numericCardNumber = Number(formData.cardnumber);
   const numericCcv = Number(formData.CCV);
 
   const newForm = {
     ...formData,
-    // cardnumber: numericCardNumber,
     CCV: numericCcv,
     id: formId,
   };
@@ -195,7 +162,6 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   localStorage.setItem('forms', JSON.stringify(updatedForms));
   console.log('Saved to local storage:', updatedForms);
 
-  /* setSubmitted(true); */
   localStorage.setItem('lastFormId', String(formId));
   // using this to clear the form data for the next submission
   setFormData((prevFormData) => ({
@@ -212,49 +178,21 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   }));
 
    setFormId((prevFormId) => prevFormId + 1);
-   
-  //  setDuplicatedFormData(null);
    setFormErrors({});
-
+   gotoHomePage('/')
 }
 
 const handleClearLocalStorage = () => {
   setSubmittedForms([]); // Clear submitted forms
 };
 
+const gotoHomePage = useNavigate();
+
+
+
   return (
 
     <section className="wrapper">
-
-
-
-
-      {/*  <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? vendors.find(vendor => vendor.name === selectedVendor)?.cardColor : '' }}>
-            <div className="card--icons">
-                <img className="card--img__chips" 
-                src='/src/assets/icons/chip.svg' alt="chip icon" />
-                <img className='card--img__icon' 
-                src={`${selectedVendor ? vendors.find(vendor => vendor.name === selectedVendor)?.icon : './src/assets/icons/cryptocurrency.svg'}`} />
-            </div>
-            <h1 className="card--number">
-              {duplicatedFormData? duplicatedFormData.cardnumber
-              .padEnd(16, 'X')
-              .replace(/(.{4})/g, '$1 ')
-              : 'XXXX XXXX XXXX XXXX'}
-            </h1>
-
-            <div className="card--info">
-                <div className='card--info__top'>
-                    <p>CARDHOLDER NAME</p>
-                    <p>VALID THRU</p>
-                </div>
-                <div className='card--info__bottom'>
-                  <p>{duplicatedFormData? duplicatedFormData.cardHolderName : 'FIRSTNAME LASTNAME'}</p>
-                  <p>{duplicatedFormData? duplicatedFormData.validThru : 'MM/YY'}</p>
-                </div>
-            </div>
-        </div>
- */}
 
       <Card cardData={formData} selectedVendor={selectedVendor} />
 
@@ -274,13 +212,13 @@ const handleClearLocalStorage = () => {
             <span className="error-message">{formErrors.cardnumber}</span>
           )}
         </label>
-        <label className="card-form__label" htmlFor="cardHolderName">
+        <label className="card-form__label" htmlFor="cardholder">
           Card Holder Name
           <input
             className="card-form__input"
             type="text"
-            name="cardHolderName"
-            id="cardHolderName"                 //  this id is used to connect the label and input
+            name="cardholder"
+            id="cardholder"                 //  this id is used to connect the label and input
             value={formData.cardholder}
             onChange={handleChange}
             placeholder="FIRSTNAME LASTNAME"
@@ -312,8 +250,8 @@ const handleClearLocalStorage = () => {
           <input
             className="card-form__input"
             type="tel"    // type="tel" for a numeric input field on mobile
-            name="ccv"
-            id="ccv"
+            name="CCV"
+            id="CCV"
             value={formData.CCV}
             onChange={handleChange}
             maxLength={3}
@@ -350,7 +288,7 @@ const handleClearLocalStorage = () => {
 
       </form>
 
-    {submittedForms.map((form) => (
+    {/* {submittedForms.map((form) => (
       <div key={form.id}>
         <p>ID: {form.id}</p>
         <p>Card Number: {form.cardnumber}</p>
@@ -359,9 +297,9 @@ const handleClearLocalStorage = () => {
         <p>CCV: {form.CCV}</p>
         <p>Vendor: {form.vendor}</p>
       </div>
-    ))}
+    ))} */}
 
-    <ClearLocalStorageButton onClear={handleClearLocalStorage}/>
+    {/* <ClearLocalStorageButton onClear={handleClearLocalStorage}/> */}
   </section>
   )
 }
