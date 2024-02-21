@@ -1,5 +1,4 @@
 import { FormData } from "./Types"
-import vendors from "./vendors"
 
 export const PlaceholderCard: FormData = {
     id: 0,
@@ -7,5 +6,5 @@ export const PlaceholderCard: FormData = {
     cardHolderName: 'FIRSTNAME LASTNAME',
     validThru: '0124',
     ccv: '000',
-    vendor: `${vendors[4].name}`
+    vendor: 'No Vendor'
 }
