@@ -3,9 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 //Tsx definition för onclick function/ ? = valfri / void = 
 
-
-
-
 //Definition av functional component/ dekonstruerad props parameter för att kunna extrahera Button
 const Button: React.FC<{title: string}> = ({title}) => {
     

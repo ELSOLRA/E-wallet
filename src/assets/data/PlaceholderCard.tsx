@@ -2,9 +2,10 @@ import { FormData } from "./Types"
 
 export const PlaceholderCard: FormData = {
     id: 0,
+    vendor: 'No Vendor',
     cardnumber: '0000000000000000',
-    cardHolderName: 'FIRSTNAME LASTNAME',
-    validThru: '0124',
-    ccv: '000',
-    vendor: 'No Vendor'
+    cardholder: 'FIRSTNAME LASTNAME',
+    expiremonth: '03',
+    expireyear: '24', 
+    CCV: 0o0
 }
