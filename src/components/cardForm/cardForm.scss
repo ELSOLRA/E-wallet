@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -74,22 +76,14 @@
   color: red;
 }
 
-.localStorage-log {
-
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-
-    &__item {
-      border: 1px solid black;
-      padding: .5rem;
-    }
-}
-
-.cards-display {
-  display:grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 0.5rem;
-  padding: 1rem;
-  
+.add-card-btn {
+  width: 382px;
+  height: 72px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 1);
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  line-height: 24.64px;
+  font-family:'PT Mono'
 }

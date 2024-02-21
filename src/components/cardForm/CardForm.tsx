@@ -1,11 +1,10 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
-// import ClearLocalStorageButton from "./ClearStorage";
-// import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
 import { vendors } from "../../assets/data/vendors";
 import Card from "../card/Card";
 import { useNavigate } from "react-router";
+import FormField from "./FormField";
 
 const MAX_SUBMISSIONS = 4;
 
@@ -23,9 +22,7 @@ const CardForm: React.FC = () => {
     CCV: ''
   });
 
-
   const [formId, setFormId] = useState<number>(1);
-  const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [selectedVendor, setSelectedVendor] = useState<string>('');
 
@@ -35,20 +32,9 @@ const CardForm: React.FC = () => {
     setFormId(lastFormId + 1);
   }, []);
 
-  useEffect(() => {
-    const storedForms = localStorage.getItem('forms');
-    if (storedForms) {
-      const parsedForms: FormData[] = JSON.parse(storedForms);
-      setSubmittedForms(parsedForms);
-      console.log('forms in storage - ', storedForms)
-    }
-  }, [formId]);
-
-
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
 
     const { name, value } = event.target;
-
 
     if (name === 'vendor') {
       //   Updating only the vendor property in the form data
@@ -58,45 +44,36 @@ const CardForm: React.FC = () => {
       }));
       setSelectedVendor(value);
     } else {
-      if (name === 'cardnumber') {
-        const formattedCardNumber = value.replace(/\D/g, '');
-        setFormData((prevFormData: FormData) => ({
-          ...prevFormData,
-          [name]: formattedCardNumber
-        }));
+      let formattedValue: string | { expiremonth: string; expireyear: string } = value;
 
-      } else if (name === 'cardholder') {
-        const formattedCardName = value.replace(/\d/g, '').toUpperCase();
-        setFormData((prevFormData: FormData) => ({
-          ...prevFormData,
-          [name]: formattedCardName,
-        }));
+      switch (name) {
+        case 'cardnumber':
+          formattedValue = value.replace(/\D/g, '');
+          break;
 
-      } else if (name === 'validThru') {
-        const formattedValidThru = value.replace(/\D/g, '');
+        case 'cardholder':
+          formattedValue = value.replace(/\d/g, '').toUpperCase();
+          break;
 
-        const expiremonth = formattedValidThru.slice(0, 2);
-        const expireyear = formattedValidThru.slice(2);
+        case 'validThru':
+          const formattedValidThru = value.replace(/\D/g, '');
+          const expiremonth = formattedValidThru.slice(0, 2);
+          const expireyear = formattedValidThru.slice(2);
+          formattedValue = { expiremonth, expireyear };
+          break;
 
-        setFormData((prevFormData: FormData) => ({
-          ...prevFormData,
-          [name]: { expiremonth, expireyear },
-        }));
+        case 'CCV':
+          formattedValue = value.replace(/\D/g, '');
+          break;
 
-      } else if (name === 'CCV') {
-        const formattedCcvNumber = value.replace(/\D/g, '');
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: formattedCcvNumber,
-        }));
-
-      } else {
-        setFormData((prevFormData: FormData) => ({
-          ...prevFormData,
-          [name]: value,
-        }));
-
+        default:
+          break;
       }
+
+      setFormData((prevFormData: FormData) => ({
+        ...prevFormData,
+        [name]: formattedValue,
+      }));
 
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
@@ -120,7 +97,7 @@ const CardForm: React.FC = () => {
     if (formData.cardholder.length < 4) {
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
-        cardholder: "Firstname with lastname must be between 4 and 25 letters",
+        cardholder: "Firstname with lastname must be between from 4 to 25 letters",
       }));
       return;
     }
@@ -130,7 +107,7 @@ const CardForm: React.FC = () => {
     if (!validThruRegex.test(`${formData.validThru.expiremonth}${formData.validThru.expireyear}`)) {
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
-        validThru: "Use MMYY format with valid expiremonth and expireyear",
+        validThru: "Use MMYY format with valid month and year",
       }));
       return;
     }
@@ -151,9 +128,7 @@ const CardForm: React.FC = () => {
       return;
     }
 
-
     const numericCcv = Number(formData.CCV);
-
     const newForm = {
       ...formData,
       CCV: numericCcv,
@@ -167,7 +142,6 @@ const CardForm: React.FC = () => {
     const updatedForms = [...forms, newForm].slice(-MAX_SUBMISSIONS);   // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
     localStorage.setItem('forms', JSON.stringify(updatedForms));
     console.log('Saved to local storage:', updatedForms);
-
 
     localStorage.setItem('lastFormId', String(formId));
     // using this to clear the form data for the next submission
@@ -184,18 +158,12 @@ const CardForm: React.FC = () => {
       vendor: "",
     }));
 
-   setFormId((prevFormId) => prevFormId + 1);
-   setFormErrors({});
-   gotoHomePage('/')
-}
+    setFormId((prevFormId) => prevFormId + 1);
+    setFormErrors({});
+    gotoHomePage('/')
+  }
 
-  // const handleClearLocalStorage = () => {
-  //   setSubmittedForms([]); // Clear submitted forms
-  // };
-
-const gotoHomePage = useNavigate();
-
-
+  const gotoHomePage = useNavigate();
 
   return (
 
@@ -204,109 +172,62 @@ const gotoHomePage = useNavigate();
       <Card cardData={formData} selectedVendor={selectedVendor} />
 
       <form className="card-form" action="" onSubmit={handleSubmit}>
-        <label className="card-form__label" htmlFor="cardnumber">
-          Card number
-          <input
-            className="card-form__input"
-            type="text"
-            name="cardnumber"
-            id="cardnumber"
-            value={formData.cardnumber}
-            onChange={handleChange}
-            maxLength={16}   //maxLength attribute to limit input
-          />
-          {formErrors.cardnumber && (
-            <span className="error-message">{formErrors.cardnumber}</span>
-          )}
-        </label>
-        <label className="card-form__label" htmlFor="cardholder">
-          Card Holder Name
-          <input
-            className="card-form__input"
-            type="text"
-            name="cardholder"
-            id="cardHolderName"                 //  this id is used to connect the label and input
-            value={formData.cardholder}
-            onChange={handleChange}
-            placeholder="FIRSTNAME LASTNAME"
-            maxLength={25}
+        <FormField
+          label="Card number"
+          name="cardnumber"
+          type="text"
+          value={formData.cardnumber}
+          onChange={handleChange}
+          error={formErrors.cardnumber}
+          maxLength={16}
+        />
+        <FormField
+          label="Card Holder Name"
+          name="cardholder"
+          type="text"
+          value={formData.cardholder}
+          onChange={handleChange}
+          error={formErrors.cardholder}
+          placeholder="FIRSTNAME LASTNAME"
+          maxLength={25}
+        />
+        <FormField
+          label="Valid thru"
+          name="validThru"
+          type="text"
+          value={`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}
+          onChange={handleChange}
+          error={formErrors.validThru}
+          placeholder="MMYY"
+          maxLength={4}
+        />
+        <FormField
+          label="CCV"
+          name="CCV"
+          type="tel"
+          value={formData.CCV}
+          onChange={handleChange}
+          error={formErrors.CCV}
+          maxLength={3}
+        />
+        <FormField
+          label="Vendor"
+          name="vendor"
+          type="select"
+          value={selectedVendor}
+          onChange={handleChange}
+          error={formErrors.vendor}
+          options={vendors.map((vendor) => ({
+            value: vendor.name,
+            label: vendor.name,
+          }))}
+        />
 
-          />
-          {formErrors.cardholder && (
-            <span className="error-message">{formErrors.cardholder}</span>
-          )}
-        </label>
-        <label className="card-form__label" htmlFor="validThru">
-          Valid thru
-          <input
-            className="card-form__input"
-            type="text"
-            name="validThru"
-            id="validThru"
-            value={`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}
-            onChange={handleChange}
-            placeholder="MMYY"
-            maxLength={4}
-          />
-          {formErrors.validThru && (
-            <span className="error-message">{formErrors.validThru}</span>
-          )}
-        </label>
-        <label className="card-form__label" htmlFor="CCV">
-          CCV
-          <input
-            className="card-form__input"
-            type="tel"    // type="tel" for a numeric input field on mobile
-            name="CCV"
-            id="ccv"
-            value={formData.CCV}
-            onChange={handleChange}
-            maxLength={3}
-          />
-          {formErrors.CCV && (
-            <span className="error-message">{formErrors.CCV}</span>
-          )}
-        </label>
-
-        <label className="card-form__label" htmlFor="vendor">
-          Select a Vendor
-          <select
-            className="card-form__select"
-            name="vendor"
-            id="vendor"
-            value={selectedVendor}
-            onChange={handleChange}
-          >
-            <option value=""></option>
-            {vendors.map((vendor, index) => (
-              <option key={index} value={vendor.name}>
-                {vendor.name}
-              </option>
-            ))}
-          </select>
-          {formErrors.vendor && (
-            <span className="error-message">{formErrors.vendor}</span>
-          )}
-        </label>
-
-        <button className="card-form__submit" type="submit">
-          Submit this!
+        <button className="add-card-btn" type="submit">
+          ADD card
         </button>
 
       </form>
-
-      {submittedForms.map((form) => (
-        <div key={form.id}>
-          <p>ID: {form.id}</p>
-          <p>Card Number: {form.cardnumber}</p>
-          <p>Card Holder Name: {form.cardholder}</p>
-          <p>Valid Thru: {`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}</p>
-          <p>CCV: {form.CCV}</p>
-          <p>Vendor: {form.vendor}</p>
-        </div>
-      ))}
-
-      {/* <ClearLocalStorageButton onClear={handleClearLocalStorage} /> */}
     </section>
   )
 }
