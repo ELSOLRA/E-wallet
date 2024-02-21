@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
-import ClearLocalStorageButton from "./ClearStorage";
+// import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
-import vendors from "../../assets/data/vendors";
+import { vendors } from "../../assets/data/vendors";
 import Card from "../card/Card";
 import { useNavigate } from "react-router";
 
@@ -23,7 +23,7 @@ const CardForm: React.FC = () => {
     });
 
     const [formId, setFormId] = useState<number>(1);
-    const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
+    // const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     const [selectedVendor, setSelectedVendor] = useState<string>('');
 
@@ -36,8 +36,8 @@ const CardForm: React.FC = () => {
     useEffect(() => {
       const storedForms = localStorage.getItem('forms');
       if (storedForms) {
-        const parsedForms: FormData[] = JSON.parse(storedForms);
-        setSubmittedForms(parsedForms);
+        // const parsedForms: FormData[] = JSON.parse(storedForms);
+        // setSubmittedForms(parsedForms);
         console.log('forms in storage - ',storedForms  )
       }
     }, [formId]);
@@ -182,9 +182,9 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
    gotoHomePage('/')
 }
 
-const handleClearLocalStorage = () => {
-  setSubmittedForms([]); // Clear submitted forms
-};
+// const handleClearLocalStorage = () => {
+//   setSubmittedForms([]); // Clear submitted forms
+// };
 
 const gotoHomePage = useNavigate();
 
