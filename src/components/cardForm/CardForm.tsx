@@ -17,9 +17,11 @@ const CardForm: React.FC<Props> = () => {
     id: 1,
     vendor: '', 
     cardnumber: '', 
-    cardholder: '', 
-    expiremonth: '', 
-    expireyear: '', 
+    cardholder: '',
+    validThru: { 
+      expiremonth: '', 
+      expireyear: '' 
+      },
     CCV: 0
     });
 

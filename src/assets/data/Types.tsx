@@ -3,8 +3,10 @@ export type FormData = {
     vendor: string; 
     cardnumber: string; 
     cardholder: string; 
-    expiremonth: string; 
-    expireyear: string; 
+    validThru: {
+      expiremonth: string; 
+      expireyear: string; 
+      }
     CCV: number
   };
 

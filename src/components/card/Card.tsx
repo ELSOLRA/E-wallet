@@ -6,7 +6,6 @@ const Card: React.FC<{index: any}>  = ({ index }) => {
     const myCard = index
     const myVendor: any = vendors.find(({ name }) => name === myCard.vendor) 
 
-
     return (
         <div className="card--wrapper" style={{backgroundColor: `${myVendor.cardColor}`}}>
             <div className="card--icons">
@@ -21,7 +20,7 @@ const Card: React.FC<{index: any}>  = ({ index }) => {
                 </div>
                 <div className='card--info__bottom'>
                     <p>{myCard.cardholder}</p>
-                    <p>{myCard.expiremonth}/{myCard.expireyear}</p>
+                    <p>{myCard.validThru.expiremonth}/{myCard.validThru.expireyear}</p>
                 </div>
             </div>
         </div>
