@@ -1,30 +1,54 @@
+
+import vendors from '../../assets/data/vendors'; 
+import { FormData } from '../../assets/data/Types';
 import './card.scss'
-import vendors from '../../assets/data/vendors'
 
-const Card: React.FC<{index: any}>  = ({ index }) => {
 
-    const myCard = index
-    const myVendor: any = vendors.find(({ name }) => name === myCard.vendor) 
-
-    return (
-        <div className="card--wrapper" style={{backgroundColor: `${myVendor.cardColor}`}}>
-            <div className="card--icons">
-                <img className="card--img__chips" src='/src/assets/icons/chip.svg' alt="chip icon" />
-                <img className='card--img__icon' src={`${myVendor.icon}`} />
-            </div>
-            <h1 className="card--number">{myCard.cardnumber.replace(/(.{4})/g, '$1 ')}</h1>
-            <div className="card--info">
-                <div className='card--info__top'>
-                    <p>CARDHOLDER NAME</p>
-                    <p>VALID THRU</p>
-                </div>
-                <div className='card--info__bottom'>
-                    <p>{myCard.cardholder}</p>
-                    <p>{myCard.validThru.expiremonth}/{myCard.validThru.expireyear}</p>
-                </div>
-            </div>
-        </div>
-    )
+export interface CardDisplayProps {
+    cardData: FormData | null;
+    selectedVendor?: string;
 }
 
-export default Card
+const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
+    const vendorInfo = selectedVendor
+    ? vendors.find((vendor) => vendor.name === selectedVendor) || { cardColor: '', icon: '' }
+    : { cardColor: '', icon: '' };
+  const { cardColor, icon } = vendorInfo;
+
+
+
+
+
+
+  return (
+    <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? cardColor || '' : '' }}>
+      <div className="card--icons">
+        <img className="card--img__chips" src='/src/assets/icons/chip.svg' alt="chip icon" />
+        <img className='card--img__icon' src={icon || './src/assets/icons/cryptocurrency.svg'} alt="vendor icon" />
+      </div>
+      <h1 className="card--number">
+      {cardData
+          ? String(cardData.cardnumber)             // must remake string for card number!!!
+              .padEnd(16, 'X')
+              .replace(/(.{4})/g, '$1 ')
+          : 'XXXX XXXX XXXX XXXX'}
+      </h1>
+
+      <div className="card--info">
+        <div className='card--info__top'>
+          <p>CARDHOLDER NAME</p>
+          <p>VALID THRU</p>
+        </div>
+        <div className='card--info__bottom'>
+          <p>{cardData ? cardData.cardholder : 'FIRSTNAME LASTNAME'}</p>
+          <p>
+            {cardData?.validThru.expiremonth || cardData?.validThru.expireyear? 
+            `${cardData?.validThru.expiremonth}/${cardData?.validThru.expireyear || 'YY'}`: 'MM/YY'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Card;

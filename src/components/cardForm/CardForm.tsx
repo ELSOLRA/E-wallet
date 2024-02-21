@@ -1,21 +1,9 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
 import ClearLocalStorageButton from "./ClearStorage";
+import { FormData } from "../../assets/data/Types";
 import vendors from "../../assets/data/vendors";
-import CardDisplay from "./CardDisplay";
-
-
-export type FormData = {
-  id: number;
-  cardnumber: string;
-  cardHolderName: string;
-  validThru: {
-    month: string;
-    year: string;
-  };
-  ccv: string;
-  vendor: string;
-};
+import Card from "../card/Card";
 
 // const cardColour = vendors.map((vendor)=> vendor.cardColor)
 /* const cardIcon = vendors.map((vendor)=> vendor.icon)
@@ -30,16 +18,15 @@ const MAX_SUBMISSIONS = 4;
 const CardForm: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({ 
-      id: 1,
-      cardnumber: "", 
-      cardHolderName: "", 
-      validThru: {
-        month: "",
-        year: "",
+    id: 1,
+    vendor: '', 
+    cardnumber: '', 
+    cardholder: '',
+    validThru: { 
+      expiremonth: '', 
+      expireyear: '' 
       },
-      ccv:"",
-      vendor:"",
-    
+    CCV: '0'
     });
 
     // const [ccvError, setCcvError] = useState<string | null>(null);
@@ -103,18 +90,18 @@ const CardForm: React.FC = () => {
         } else if (name === 'validThru') {
           const formattedValidThru = value.replace(/\D/g, '');
 
-          const month = formattedValidThru.slice(0, 2);
-          const year = formattedValidThru.slice(2);
+          const expiremonth = formattedValidThru.slice(0, 2);
+          const expireyear = formattedValidThru.slice(2);
 
           setFormData((prevFormData: FormData) => ({
             ...prevFormData,
-            [name]: { month, year },
+            [name]: { expiremonth, expireyear },
           }));
 /*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
             validThru: formattedValidThru.replace(/(\d{2})(\d{2})/, '$1/$2'),
           })); */
-        } else if (name === 'ccv') {
+        } else if (name === 'CCV') {
           const formattedCcvNumber = value.replace(/\D/g, '');
           setFormData((prevFormData) => ({
             ...prevFormData,
@@ -165,10 +152,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 
   const validThruRegex = /^(0[1-9]|1[0-2])(2[2-9]|[3-9][0-9])$/;
 
-  if (!validThruRegex.test(`${formData.validThru.month}${formData.validThru.year}`)) {
+  if (!validThruRegex.test(`${formData.validThru.expiremonth}${formData.validThru.expireyear}`)) {
     setFormErrors((prevFormErrors) => ({
       ...prevFormErrors,
-      validThru: "Use MMYY format with valid month and year",
+      validThru: "Use MMYY format with valid expiremonth and expireyear",
     }));
     return;
   }
@@ -191,12 +178,12 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   }
 
   // const numericCardNumber = Number(formData.cardnumber);
-  const numericCcv = Number(formData.ccv);
+  const numericCcv = Number(formData.CCV);
 
   const newForm = {
     ...formData,
     // cardnumber: numericCardNumber,
-    ccv: numericCcv,
+    CCV: numericCcv,
     id: formId,
   };
 
@@ -215,12 +202,12 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     ...prevFormData,
     id: formId + 1,
     cardnumber: "",
-    cardHolderName: "",
+    cardholder: "",
     validThru: {
-      month: "",
-      year: "",
+      expiremonth: "",
+      expireyear: "",
     },
-    ccv: "",
+    CCV: "",
     vendor: "",
   }));
 
@@ -269,7 +256,7 @@ const handleClearLocalStorage = () => {
         </div>
  */}
 
-      <CardDisplay cardData={formData} selectedVendor={selectedVendor} />
+      <Card cardData={formData} selectedVendor={selectedVendor} />
 
       <form className="card-form" action="" onSubmit={handleSubmit}>
         <label className="card-form__label" htmlFor="cardnumber">
@@ -294,7 +281,7 @@ const handleClearLocalStorage = () => {
             type="text"
             name="cardHolderName"
             id="cardHolderName"                 //  this id is used to connect the label and input
-            value={formData.cardHolderName}
+            value={formData.cardholder}
             onChange={handleChange}
             placeholder="FIRSTNAME LASTNAME"
             maxLength={25}
@@ -311,7 +298,7 @@ const handleClearLocalStorage = () => {
             type="text"
             name="validThru"
             id="validThru"
-            value={`${formData.validThru.month}${formData.validThru.year}`}
+            value={`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}
             onChange={handleChange}
             placeholder="MMYY"
             maxLength={4}
@@ -320,19 +307,19 @@ const handleClearLocalStorage = () => {
             <span className="error-message">{formErrors.validThru}</span>
           )}
         </label>
-        <label className="card-form__label" htmlFor="ccv">
+        <label className="card-form__label" htmlFor="CCV">
           CCV
           <input
             className="card-form__input"
             type="tel"    // type="tel" for a numeric input field on mobile
             name="ccv"
             id="ccv"
-            value={formData.ccv}
+            value={formData.CCV}
             onChange={handleChange}
             maxLength={3}
           />
-          {formErrors.ccv && (
-            <span className="error-message">{formErrors.ccv}</span>
+          {formErrors.CCV && (
+            <span className="error-message">{formErrors.CCV}</span>
           )}
         </label>
 
@@ -363,35 +350,19 @@ const handleClearLocalStorage = () => {
 
       </form>
 
-      <div className="localStorage-log">
-        {submittedForms.map((form) => (
-          <div key={form.id} className="localStorage-log__item">
-            <p>ID: {form.id}</p>
-            <p>Card Number: {form.cardnumber}</p>
-            <p>Card Holder Name: {form.cardHolderName}</p>
-            <p>Valid Thru: {`${form.validThru.month}${form.validThru.year}`}</p>
-            <p>CCV: {form.ccv}</p>
-            <p>Vendor: {form.vendor}</p>
-          </div>
-        ))}
+    {submittedForms.map((form) => (
+      <div key={form.id}>
+        <p>ID: {form.id}</p>
+        <p>Card Number: {form.cardnumber}</p>
+        <p>Card Holder Name: {form.cardholder}</p>
+        <p>Valid Thru: {`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}</p>
+        <p>CCV: {form.CCV}</p>
+        <p>Vendor: {form.vendor}</p>
       </div>
-      {/*  {duplicatedFormData && (
-        <section className="card-data">
-          <p>Card Data:</p>
-          <p className="card__item card__item--number">Card Number: {duplicatedFormData.cardnumber}</p>
-          <p className="card__item card__item--holder">Card Holder Name: {duplicatedFormData.cardHolderName}</p>
-          <p className="card__item card__item--valid-thru">Valid Thru: {duplicatedFormData.validThru}</p>
-          <p className="card__item card__item--ccv">CCV: {duplicatedFormData.ccv}</p>
-        </section>
-      )} */}
-      <div className="cards-display">
-        {submittedForms.map((form) => (
-          <CardDisplay key={form.id} cardData={form} selectedVendor={form.vendor} />
-        ))}
-      </div>
+    ))}
 
-      <ClearLocalStorageButton onClear={handleClearLocalStorage} />
-    </section>
+    <ClearLocalStorageButton onClear={handleClearLocalStorage}/>
+  </section>
   )
 }
 
