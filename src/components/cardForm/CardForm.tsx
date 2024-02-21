@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, useEffect } from "react"
 import './cardForm.scss'
-import ClearLocalStorageButton from "./ClearStorage";
+// import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
 import vendors from "../../assets/data/vendors";
 import Card from "../card/Card";
@@ -188,10 +188,9 @@ const CardForm: React.FC = () => {
    gotoHomePage('/')
 }
 
-  const handleClearLocalStorage = () => {
-    setSubmittedForms([]); // Clear submitted forms
-  };
-
+  // const handleClearLocalStorage = () => {
+  //   setSubmittedForms([]); // Clear submitted forms
+  // };
 
 const gotoHomePage = useNavigate();
 
@@ -306,7 +305,7 @@ const gotoHomePage = useNavigate();
         </div>
       ))}
 
-      <ClearLocalStorageButton onClear={handleClearLocalStorage} />
+      {/* <ClearLocalStorageButton onClear={handleClearLocalStorage} /> */}
     </section>
   )
 }
