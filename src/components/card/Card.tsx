@@ -3,7 +3,6 @@ import vendors from '../../assets/data/vendors';
 import { FormData } from '../../assets/data/Types';
 import './card.scss'
 
-
 export interface CardDisplayProps {
     cardData: FormData | null;
     selectedVendor?: string;
@@ -14,11 +13,6 @@ const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
     ? vendors.find((vendor) => vendor.name === selectedVendor) || { cardColor: '', icon: '' }
     : { cardColor: '', icon: '' };
   const { cardColor, icon } = vendorInfo;
-
-
-
-
-
 
   return (
     <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? cardColor || '' : '' }}>

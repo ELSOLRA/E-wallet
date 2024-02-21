@@ -9,5 +9,3 @@ export type FormData = {
       }
     CCV: string
   };
-
-  

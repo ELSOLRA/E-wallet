@@ -4,7 +4,7 @@ import ClearLocalStorageButton from "./ClearStorage";
 import { FormData } from "../../assets/data/Types";
 import vendors from "../../assets/data/vendors";
 import Card from "../card/Card";
-
+import { useNavigate } from "react-router";
 
 const MAX_SUBMISSIONS = 4;
 
@@ -183,14 +183,19 @@ const CardForm: React.FC = () => {
       vendor: "",
     }));
 
-    setFormId((prevFormId) => prevFormId + 1);
-    setFormErrors({});
-
-  }
+   setFormId((prevFormId) => prevFormId + 1);
+   setFormErrors({});
+   gotoHomePage('/')
+}
 
   const handleClearLocalStorage = () => {
     setSubmittedForms([]); // Clear submitted forms
   };
+
+
+const gotoHomePage = useNavigate();
+
+
 
   return (
 
@@ -214,7 +219,7 @@ const CardForm: React.FC = () => {
             <span className="error-message">{formErrors.cardnumber}</span>
           )}
         </label>
-        <label className="card-form__label" htmlFor="cardHolderName">
+        <label className="card-form__label" htmlFor="cardholder">
           Card Holder Name
           <input
             className="card-form__input"

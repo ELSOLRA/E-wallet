@@ -19,7 +19,14 @@ const HomePage = () => {
     const newIndex = cards.findIndex((i: number | any) => i.id === cardId);
     setActiveIndex(newIndex);
   }
-  const myVendor: any = vendors.find(({ name }) => name === cards[activeIndex]?.vendor)
+  const myVendor: any = vendors.find(({ name }) => name === cards[activeIndex]?.vendor) 
+  ? vendors.find(({ name }) => name === cards[activeIndex]?.vendor) 
+  : {
+    name: 'No Vendor', 
+    icon: 'FRONTEND\E-wallet\src\assets\icons\cryptocurrency.svg', 
+    cardColor: 'rgba(208, 208, 208, 1)', 
+    textColor: 'rgba(255, 255, 255, 1)'
+  }
 
   return (
     <div>

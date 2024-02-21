@@ -9,5 +9,5 @@ export const PlaceholderCard: FormData = {
         expiremonth: '03',
         expireyear: '24', 
         },
-    CCV: 0o0
+    CCV: '000'
 }
