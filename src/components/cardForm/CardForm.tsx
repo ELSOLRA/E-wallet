@@ -14,12 +14,13 @@ const MAX_SUBMISSIONS = 4;
 const CardForm: React.FC<Props> = () => {
 
   const [formData, setFormData] = useState<FormData>({ 
-      id: 1,
-      cardnumber: "", 
-      cardHolderName: "", 
-      validThru:"",
-      ccv:"",
-      vendor:"",
+    id: 1,
+    vendor: '', 
+    cardnumber: '', 
+    cardholder: '', 
+    expiremonth: '', 
+    expireyear: '', 
+    CCV: 0
     });
 
     // const [ccvError, setCcvError] = useState<string | null>(null);
@@ -66,7 +67,7 @@ const CardForm: React.FC<Props> = () => {
             ...prevDuplicatedFormData!,
              [name]: formattedCardNumber, // replace(/(.{4})/g, '$1 '),
           }));
-        } else if (name === 'cardHolderName') {
+        } else if (name === 'cardholder') {
           const formattedCardName = value.replace(/\d/g, '').toUpperCase();
           setFormData((prevFormData: FormData) => ({ 
             ...prevFormData,
@@ -127,10 +128,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     return;
   }
 
-  if (formData.cardHolderName.length < 4) {
+  if (formData.cardholder.length < 4) {
     setFormErrors((prevFormErrors) => ({
       ...prevFormErrors,
-      cardHolderName: "Firstname with lastname must be between 4 and 25 letters",
+      cardholder: "Firstname with lastname must be between 4 and 25 letters",
     }));
     return;
   }
@@ -146,10 +147,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   }
 
 
-  if (formData.ccv.length !== 3) {
+  if (formData.CCV.length !== 3) {
     setFormErrors((prevFormErrors) => ({
       ...prevFormErrors,
-      ccv: "CCV number must be 3 digits",
+      CCV: "CCV number must be 3 digits",
     }));
     return;
   }
@@ -162,11 +163,11 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     return;
   }
 
-  const numericCcv = Number(formData.ccv);
+  const numericCCV = Number(formData.CCV);
 
   const newForm = {
     ...formData,
-    ccv: numericCcv,
+    CCV: numericCCV,
     id: formId,
   };
 
@@ -183,12 +184,13 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
   // using this to clear the form data for the next submission
   setFormData((prevFormData) => ({
     ...prevFormData,
-    id: formId + 1,
-    cardnumber: "",
-    cardHolderName: "",
-    validThru: "",
-    ccv: "",
-    vendor: "",
+    id: 1,
+    vendor: '', 
+    cardnumber: '', 
+    cardholder: '', 
+    expiremonth: '', 
+    expireyear: '', 
+    CCV: 0
   }));
 
    setFormId((prevFormId) => prevFormId + 1);
@@ -206,7 +208,6 @@ const handleClearLocalStorage = () => {
 
     <section className="wrapper">
     
-
     <Card index={duplicatedFormData} />
 
     <form className="card-form" action="" onSubmit={handleSubmit}>
@@ -225,21 +226,21 @@ const handleClearLocalStorage = () => {
               <span className="error-message">{formErrors.cardnumber}</span>
             )}
       </label>
-      <label className="card-form__label" htmlFor="cardHolderName">
+      <label className="card-form__label" htmlFor="cardholder">
         Card Holder Name
         <input
           className="card-form__input"
           type="text"
-          name="cardHolderName"
-          id="cardHolderName"                 //  this id is used to connect the label and input
-          value={formData.cardHolderName}
+          name="cardholder"
+          id="cardholder"                 //  this id is used to connect the label and input
+          value={formData.cardholder}
           onChange={handleChange}
           placeholder="FIRSTNAME LASTNAME"
           maxLength={25}
           
         />
-        {formErrors.cardHolderName && (
-              <span className="error-message">{formErrors.cardHolderName}</span>
+        {formErrors.cardholder && (
+              <span className="error-message">{formErrors.cardholder}</span>
             )}
       </label>
       <label className="card-form__label" htmlFor="validThru">
@@ -258,19 +259,19 @@ const handleClearLocalStorage = () => {
               <span className="error-message">{formErrors.validThru}</span>
             )}
       </label>
-      <label className="card-form__label" htmlFor="ccv">
+      <label className="card-form__label" htmlFor="CCV">
         CCV
         <input
           className="card-form__input"
           type="tel"    // type="tel" for a numeric input field on mobile
-          name="ccv"
-          id="ccv"
-          value={formData.ccv === null ? '' : String(formData.ccv)}
+          name="CCV"
+          id="CCV"
+          value={formData.CCV === null ? '' : String(formData.CCV)}
           onChange={handleChange}
           maxLength={3} 
         />
-         {formErrors.ccv && (
-              <span className="error-message">{formErrors.ccv}</span>
+         {formErrors.CCV && (
+              <span className="error-message">{formErrors.CCV}</span>
             )}
       </label>
 
@@ -305,9 +306,9 @@ const handleClearLocalStorage = () => {
       <div key={form.id}>
         <p>ID: {form.id}</p>
         <p>Card Number: {form.cardnumber}</p>
-        <p>Card Holder Name: {form.cardHolderName}</p>
+        <p>Card Holder Name: {form.cardholder}</p>
         <p>Valid Thru: {form.validThru}</p>
-        <p>CCV: {form.ccv}</p>
+        <p>CCV: {form.CCV}</p>
         <p>Vendor: {form.vendor}</p>
       </div>
     ))}

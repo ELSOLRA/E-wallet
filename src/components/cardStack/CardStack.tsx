@@ -1,14 +1,15 @@
 // CardStack.tsx
 import Card from '../card/Card';
 
-const CardStack = ({ cards }: any) => {
-    const myCards = cards;
+const CardStack: React.FC<{cards: Array<Object>; selectCard: Function}> = ({ cards, selectCard }) => {
 
     return (
         <div>
             {/* Använd map för att loopa igenom parsedForms och rendera en Card-komponent för varje formulär */}
-            {myCards.map((card: object, index: number) => (
-                <Card key={index} index={card} />
+            {cards.map((card: any, index: number) => (
+                <div onClick={() => selectCard(card.id)} key={index}>
+                    <Card index={card} />
+                </div>
             ))}
         </div>
     );

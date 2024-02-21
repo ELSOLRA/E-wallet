@@ -1,7 +1,7 @@
 import './card.scss'
 import vendors from '../../assets/data/vendors'
 
-const Card = ({ index }: any) => {
+const Card: React.FC<{index: any}>  = ({ index }) => {
 
     const myCard = index
     const myVendor: any = vendors.find(({ name }) => name === myCard.vendor) 
@@ -20,8 +20,8 @@ const Card = ({ index }: any) => {
                     <p>VALID THRU</p>
                 </div>
                 <div className='card--info__bottom'>
-                    <p>{myCard.cardHolderName}</p>
-                    <p>{myCard.validThru[0]}{myCard.validThru[1]}/{myCard.validThru[2]}{myCard.validThru[3]}</p>
+                    <p>{myCard.cardholder}</p>
+                    <p>{myCard.expiremonth}/{myCard.expireyear}</p>
                 </div>
             </div>
         </div>
