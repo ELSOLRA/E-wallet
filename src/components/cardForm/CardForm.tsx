@@ -9,7 +9,10 @@ export type FormData = {
   id: number;
   cardnumber: string;
   cardHolderName: string;
-  validThru: string;
+  validThru: {
+    month: string;
+    year: string;
+  };
   ccv: string;
   vendor: string;
 };
@@ -30,7 +33,10 @@ const CardForm: React.FC = () => {
       id: 1,
       cardnumber: "", 
       cardHolderName: "", 
-      validThru:"",
+      validThru: {
+        month: "",
+        year: "",
+      },
       ccv:"",
       vendor:"",
     
@@ -96,9 +102,13 @@ const CardForm: React.FC = () => {
           })); */
         } else if (name === 'validThru') {
           const formattedValidThru = value.replace(/\D/g, '');
+
+          const month = formattedValidThru.slice(0, 2);
+          const year = formattedValidThru.slice(2);
+
           setFormData((prevFormData: FormData) => ({
             ...prevFormData,
-            [name]: formattedValidThru,
+            [name]: { month, year },
           }));
 /*           setDuplicatedFormData((prevDuplicatedFormData: FormData | null) => ({
             ...prevDuplicatedFormData!,
@@ -155,7 +165,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 
   const validThruRegex = /^(0[1-9]|1[0-2])(2[2-9]|[3-9][0-9])$/;
 
-  if (!validThruRegex.test(formData.validThru)) {
+  if (!validThruRegex.test(`${formData.validThru.month}${formData.validThru.year}`)) {
     setFormErrors((prevFormErrors) => ({
       ...prevFormErrors,
       validThru: "Use MMYY format with valid month and year",
@@ -180,12 +190,12 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     return;
   }
 
-  const numericCardNumber = Number(formData.cardnumber);
+  // const numericCardNumber = Number(formData.cardnumber);
   const numericCcv = Number(formData.ccv);
 
   const newForm = {
     ...formData,
-    cardnumber: numericCardNumber,
+    // cardnumber: numericCardNumber,
     ccv: numericCcv,
     id: formId,
   };
@@ -206,7 +216,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     id: formId + 1,
     cardnumber: "",
     cardHolderName: "",
-    validThru: "",
+    validThru: {
+      month: "",
+      year: "",
+    },
     ccv: "",
     vendor: "",
   }));
@@ -304,7 +317,7 @@ const handleClearLocalStorage = () => {
             type="text"
             name="validThru"
             id="validThru"
-            value={formData.validThru}
+            value={`${formData.validThru.month}${formData.validThru.year}`}
             onChange={handleChange}
             placeholder="MMYY"
             maxLength={4}
@@ -362,7 +375,7 @@ const handleClearLocalStorage = () => {
             <p>ID: {form.id}</p>
             <p>Card Number: {form.cardnumber}</p>
             <p>Card Holder Name: {form.cardHolderName}</p>
-            <p>Valid Thru: {form.validThru}</p>
+            <p>Valid Thru: {`${form.validThru.month}${form.validThru.year}`}</p>
             <p>CCV: {form.ccv}</p>
             <p>Vendor: {form.vendor}</p>
           </div>

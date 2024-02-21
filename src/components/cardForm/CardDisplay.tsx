@@ -35,7 +35,10 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) =
         </div>
         <div className='card--info__bottom'>
           <p>{cardData ? cardData.cardHolderName : 'FIRSTNAME LASTNAME'}</p>
-          <p>{cardData && cardData.validThru ? cardData.validThru.replace(/(\d{2})(\d{2})/, '$1/$2') : 'MM/YY'}</p>
+          <p>
+            {cardData?.validThru.month || cardData?.validThru.year? 
+            `${cardData?.validThru.month}/${cardData?.validThru.year || 'YY'}`: 'MM/YY'}
+          </p>
         </div>
       </div>
     </div>
