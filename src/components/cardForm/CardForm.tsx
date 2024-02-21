@@ -22,7 +22,7 @@ const CardForm: React.FC<Props> = () => {
       expiremonth: '', 
       expireyear: '' 
       },
-    CCV: 0
+    CCV: '0'
     });
 
     // const [ccvError, setCcvError] = useState<string | null>(null);
@@ -192,7 +192,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     cardholder: '', 
     expiremonth: '', 
     expireyear: '', 
-    CCV: 0
+    CCV: '0'
   }));
 
    setFormId((prevFormId) => prevFormId + 1);
@@ -252,7 +252,7 @@ const handleClearLocalStorage = () => {
           type="text"
           name="validThru"
           id="validThru"
-          value={formData.validThru}
+          value={`${formData.validThru.expiremonth}${formData.validThru.expireyear}`}
           onChange={handleChange}
           placeholder="MMYY"
           maxLength={4} 

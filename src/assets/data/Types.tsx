@@ -7,7 +7,5 @@ export type FormData = {
       expiremonth: string; 
       expireyear: string; 
       }
-    CCV: number
+    CCV: string
   };
-
-  
