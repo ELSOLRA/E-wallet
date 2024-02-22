@@ -19,12 +19,12 @@ Gruppövning Frontendramverk Feb 16 2024
 
 ## Table of Contents
 
-- [Project Name](#E-wallet)
+- [E-wallet](#E-wallet)
 - [Clone the Repository](#clone-the-repository)
 - [Screenshots](#screenshots)
 
 ## Clone the repository
- 
+ https://github.com/ELSOLRA/E-wallet.git
 
 ## Screenshots
 
