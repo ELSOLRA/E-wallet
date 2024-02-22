@@ -10,8 +10,8 @@ const ClearLocalStorageButton: React.FC<ClearLocalStorageButtonProps> = ({ onCle
   };
 
   return (
-    <button onClick={handleClearLocalStorage}>
-      Remove Da Card !!!
+    <button onClick={handleClearLocalStorage} className="card-button">
+      REMOVE ACTIVE CARD
     </button>
   );
 };

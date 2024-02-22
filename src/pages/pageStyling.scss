@@ -1,6 +1,11 @@
+body {
+    background-color: rgb(229, 229, 229);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 .wrapper{
-    border: 1px solid black;
     width: 414px;
     height: auto;
     font-family: "source sans";
@@ -11,8 +16,9 @@
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    background-color: white;
+    box-shadow: 1px 1px 5px grayscale($color: #000000) ;
 }
-
 
 .CardStack:nth-child(1){
     transform: translateY(0px);

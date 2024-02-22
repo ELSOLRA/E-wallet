@@ -14,9 +14,9 @@
     height: 241px;
     background-color: rgba(208, 208, 208, 1);
     font-family: 'PT Mono';
-    color: white;
     justify-content: space-around;
     margin: 10px;
+    box-shadow: 1px 1px 5px grayscale($color: #000000) ;
 }
 .card--icons {
     display: flex;
@@ -36,13 +36,12 @@
     letter-spacing: 1px;
     margin: 0 auto 0 auto;
     width: 350px;
-    color: black;
 }
 .card--info {
     display: flex;
     flex-direction: column;
     margin: 1rem;
-    color: black;
+    font-weight: 400;
 }
 .card--info__top {
    display: flex;

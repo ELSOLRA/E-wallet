@@ -18,6 +18,7 @@
     max-width: 400px; 
     margin: auto; 
     margin-top: 50px;
+    margin-bottom: 1rem;
     padding: 0 1rem;
 
 
@@ -114,4 +115,8 @@
   color: rgba(255, 255, 255, 1);
   line-height: 24.64px;
   font-family:'PT Mono'
+}
+.add-card-btn:hover {
+  cursor: pointer;
+  background-color: rgba(40, 40, 40, 0.693);
 }

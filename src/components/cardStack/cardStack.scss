@@ -1,8 +1,8 @@
 .card-stack{
     display: flex;
     flex-direction: column;
-    height: 450px;
     position: relative;
+    max-height: 23rem;
 }
 
 .card-stack__item:nth-child(1){

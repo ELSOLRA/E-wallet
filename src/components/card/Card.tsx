@@ -10,12 +10,12 @@ export interface CardDisplayProps {
 
 const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
     const vendorInfo = selectedVendor
-    ? vendors.find((vendor) => vendor.name === selectedVendor) || { cardColor: '', icon: '' }
-    : { cardColor: '', icon: '' };
-  const { cardColor, icon } = vendorInfo;
+    ? vendors.find((vendor) => vendor.name === selectedVendor) || { cardColor: '', icon: '', textColor: '' }
+    : { cardColor: '', icon: '', textColor: ''};
+  const { cardColor, icon, textColor } = vendorInfo;
 
   return (
-    <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? cardColor || '' : '' }}>
+    <div className="card--wrapper" style={{ backgroundColor: selectedVendor ? cardColor || '' : '' , color: selectedVendor ? textColor || '' : '' }}>
       <div className="card--icons">
         <img className="card--img__chips" src='/src/assets/icons/chip.svg' alt="chip icon" />
         <img className='card--img__icon' src={icon || './src/assets/icons/cryptocurrency.svg'} alt="vendor icon" />
@@ -34,7 +34,7 @@ const Card: React.FC<CardDisplayProps> = ({ cardData, selectedVendor }) => {
           <p>VALID THRU</p>
         </div>
         <div className='card--info__bottom'>
-          <p>{cardData ? cardData.cardholder : 'FIRSTNAME LASTNAME'}</p>
+          <p>{cardData?.cardholder? cardData.cardholder : 'FIRSTNAME LASTNAME'}</p>
           <p>
             {cardData?.validThru.expiremonth || cardData?.validThru.expireyear? 
             `${cardData?.validThru.expiremonth}/${cardData?.validThru.expireyear || 'YY'}`: 'MM/YY'}
