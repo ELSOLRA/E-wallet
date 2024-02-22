@@ -8,13 +8,14 @@ import AddCardPage from './pages/AddCardPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 
+
 const router = createBrowserRouter(
-  createRoutesFromElements(
-  <Route errorElement={<ErrorPage />}>
-    < Route path='/' element={<HomePage />} />
-    < Route path='/addcard' element={<AddCardPage />} />
-  </Route>
-)
+    createRoutesFromElements(
+    <Route errorElement={<ErrorPage />}>
+      < Route path='/' element={<HomePage />} />
+      < Route path='/addcard' element={<AddCardPage />} />
+    </Route>
+    )
 )
 
 function App() {
