@@ -40,13 +40,13 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <section className="wrapper">
       <Top headline='E-WALLET'  cardType='ACTIVE CARD' />
       <Card cardData={cards[activeIndex]} selectedVendor={myVendor.name} /> 
       <ClearLocalStorageButton onClear={clearLocalStorage} />
       <CardStack cards={stackedCards} selectCard={changeActive}/>
       <Button title='ADD A NEW CARD'/>
-    </div>
+    </section>
   )
 }
 

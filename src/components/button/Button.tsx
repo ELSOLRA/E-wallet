@@ -1,4 +1,4 @@
-// Button at the bottom of the pages.
+import './button.scss'
 import { useNavigate } from "react-router-dom";
 
 const Button: React.FC<{title: string}> = ({title}) => {
@@ -8,7 +8,7 @@ const Button: React.FC<{title: string}> = ({title}) => {
         gotoAddCard('/addcard')
     };
 
-    return <button className="card-button" onClick={changeText}>{title}</button>;
+    return <button className="card-button card-button--btncolor " onClick={changeText}>{title}</button>;
 }
 
 export default Button;

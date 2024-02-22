@@ -16,6 +16,7 @@
     font-family: 'PT Mono';
     color: white;
     justify-content: space-around;
+    margin: 10px;
 }
 .card--icons {
     display: flex;
@@ -35,19 +36,23 @@
     letter-spacing: 1px;
     margin: 0 auto 0 auto;
     width: 350px;
+    color: black;
 }
 .card--info {
     display: flex;
     flex-direction: column;
     margin: 1rem;
+    color: black;
 }
 .card--info__top {
    display: flex;
    justify-content: space-between;
    font-size: 12px;
+  
 }
 .card--info__bottom {
     display: flex;
     justify-content: space-between;
     font-size: 18px;
+    margin-top: 10px;
 }

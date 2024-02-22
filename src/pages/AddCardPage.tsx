@@ -1,13 +1,14 @@
 import CardForm from "../components/cardForm/CardForm"
 import Top from "../components/top/Top";
+import './pageStyling.scss'
 
 const AddCardPage = () => {
 
   return (
-    <div>
-      <Top headline='ADD NEW CARD' cardType='NEW CARD'/>
+    <section className="wrapper">
+      <Top headline='ADD A NEW BANK CARD' cardType='NEW CARD'/>
       <CardForm />
-    </div>
+    </section>
   )
 }
 

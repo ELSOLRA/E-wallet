@@ -167,7 +167,7 @@ const CardForm: React.FC = () => {
 
   return (
 
-    <section className="wrapper">
+    <section className="form-container">
 
       <Card cardData={formData} selectedVendor={selectedVendor} />
 
@@ -191,6 +191,7 @@ const CardForm: React.FC = () => {
           placeholder="FIRSTNAME LASTNAME"
           maxLength={25}
         />
+        <section className="card-form__items-containers">
         <FormField
           label="Valid thru"
           name="validThru"
@@ -210,6 +211,7 @@ const CardForm: React.FC = () => {
           error={formErrors.CCV}
           maxLength={3}
         />
+        </section>
         <FormField
           label="Vendor"
           name="vendor"

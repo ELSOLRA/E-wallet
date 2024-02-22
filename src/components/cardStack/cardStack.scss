@@ -1,6 +1,16 @@
-.card:nth-child(1){
-    transform: translateY(0px);
-    }
-    .Card{
-        transform: translateY(-100px);
-    }
+.card-stack{
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    position: relative;
+}
+
+.card-stack__item:nth-child(1){
+    transform: translateY(0%);
+}
+.card-stack__item:nth-child(2){
+    transform: translateY(-82%);
+}
+.card-stack__item:nth-child(3){
+    transform: translateY(-164%);
+}
