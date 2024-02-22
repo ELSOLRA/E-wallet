@@ -5,6 +5,7 @@ import Card from "../components/card/Card";
 import CardStack from "../components/cardStack/CardStack";
 import Top from "../components/top/Top";
 import { Novendor,vendors } from "../assets/data/vendors";
+import '../components/cardStack/cardStack.scss'
 
 import ClearLocalStorageButton from "../components/cardForm/ClearStorage";
 
@@ -41,10 +42,10 @@ const HomePage = () => {
   return (
     <div>
       <Top headline='E-WALLET'  cardType='ACTIVE CARD' />
-      <Card cardData={cards[activeIndex]} selectedVendor={myVendor.name} />
+      <Card cardData={cards[activeIndex]} selectedVendor={myVendor.name} /> 
+      <ClearLocalStorageButton onClear={clearLocalStorage} />
       <CardStack cards={stackedCards} selectCard={changeActive}/>
       <Button title='ADD A NEW CARD'/>
-      <ClearLocalStorageButton onClear={clearLocalStorage} />
     </div>
   )
 }
