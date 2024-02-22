@@ -52,7 +52,8 @@ const CardForm: React.FC = () => {
           break;
 
         case 'cardholder':
-          formattedValue = value.replace(/\d/g, '').toUpperCase();
+           // this regex /[^a-zA-Z]/g  matches any character that is not a letter
+          formattedValue = value.replace(/[^a-zA-Z]/g, '').toUpperCase();  
           break;
 
         case 'validThru':
@@ -87,8 +88,8 @@ const CardForm: React.FC = () => {
   };
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
-
-    event.preventDefault();    // this prevents the default form submission behavior
+    // this prevents the default form submission behavior
+    event.preventDefault();    
 
     if (formData.cardnumber.length !== 16) {
       setFormErrors((prevFormErrors) => ({
@@ -106,7 +107,8 @@ const CardForm: React.FC = () => {
       return;
     }
 
-    const validThruRegex = /^(0[1-9]|1[0-2])(2[2-9]|[3-9][0-9])$/;
+    // regex that takes MMYY format and year only from 24
+    const validThruRegex = /^(0[1-9]|1[0-2])(2[4-9]|[3-9][0-9])$/;  
 
     if (!validThruRegex.test(`${formData.validThru.expiremonth}${formData.validThru.expireyear}`)) {
       setFormErrors((prevFormErrors) => ({
@@ -132,13 +134,6 @@ const CardForm: React.FC = () => {
       return;
     }
 
-    if (formData.CCV.length !== 3) {
-      setFormErrors((prevFormErrors) => ({
-        ...prevFormErrors,
-        CCV: "CCV number must be 3 digits",
-      }));
-      return;
-    }
 
     const numericCcv = Number(formData.CCV);
     const newForm = {
@@ -164,8 +159,8 @@ const CardForm: React.FC = () => {
 
     } else {
     const updatedForms = [...storedForms, newForm].slice(-MAX_SUBMISSIONS);
-    localStorage.setItem('forms', JSON.stringify(updatedForms));   // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
-    console.log('Saved to local storage:', updatedForms);
+    // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
+    localStorage.setItem('forms', JSON.stringify(updatedForms));   
     localStorage.setItem('lastFormId', String(formId));
 
     // using this to clear the form data for the next submission

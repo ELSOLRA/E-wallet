@@ -102,6 +102,8 @@
 
 .error-message {
   color: red;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .add-card-btn {
