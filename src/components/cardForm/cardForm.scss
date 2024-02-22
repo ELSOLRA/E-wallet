@@ -87,3 +87,33 @@
   line-height: 24.64px;
   font-family:'PT Mono'
 }
+
+.confirmation-message {
+  margin: 0.5rem 0;
+  color: red;
+  width: 23rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    padding: 0 0.3rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+  }
+}
+
+
+.confirmation-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0.5rem;
+
+  button {
+    border: none;
+    border-radius: 15% / 50%;
+    background-color: #ff3e3e;
+    color: white;
+    padding: 0.4rem;
+  }
+}
