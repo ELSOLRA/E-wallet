@@ -1,5 +1,4 @@
 import { FormData } from "./Types"
-
 export const PlaceholderCard: FormData = {
     id: 0,
     vendor: 'No Vendor',

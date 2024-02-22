@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import FormField from "./FormField";
 
 const MAX_SUBMISSIONS = 4;
-
 const CardForm: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({

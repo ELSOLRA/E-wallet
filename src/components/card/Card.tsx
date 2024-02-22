@@ -1,4 +1,3 @@
-
 import { vendors } from '../../assets/data/vendors';
 import { FormData } from '../../assets/data/Types';
 import './card.scss'

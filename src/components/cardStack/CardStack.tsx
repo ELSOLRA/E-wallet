@@ -4,7 +4,6 @@ import Card from '../card/Card';
 
 const CardStack: React.FC<{cards: Array<Object>; selectCard: Function}> = ({ cards, selectCard }) => {
    
-
     return (
         <section className='card-stack'>
             {/* Använd map för att loopa igenom parsedForms och rendera en Card-komponent för varje formulär */}

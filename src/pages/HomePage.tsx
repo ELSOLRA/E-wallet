@@ -36,7 +36,6 @@ const HomePage = () => {
     setActiveIndex(0);  
     const updatedCards = updatedForms.length > 0 ? updatedForms : [PlaceholderCard];
     setCards(updatedCards);
-
   };
 
   return (

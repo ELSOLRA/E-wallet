@@ -1,4 +1,3 @@
-//Skapar en funktionell komponent
 const StoredForms: React.FC = () => {
     // Hämta den sparade formulärdatan från localStorage med getItem med nyckeln forms
     const storedForms = localStorage.getItem("forms");

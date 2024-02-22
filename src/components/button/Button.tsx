@@ -7,7 +7,6 @@ const Button: React.FC<{title: string}> = ({title}) => {
     const changeText = () => {  
         gotoAddCard('/addcard')
     };
-
     return <button className="card-button card-button--btncolor " onClick={changeText}>{title}</button>;
 }
 

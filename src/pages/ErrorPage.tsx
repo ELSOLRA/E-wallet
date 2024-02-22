@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { useRouteError } from "react-router-dom";
 import "./pageStyling.scss"
 
-// ~~ Errorpage ~~
-// Display the relevant information on screen. show the full error information in console. And offers a link back to the homepage.
 const ErrorPage = () => {
 
   const error: any = useRouteError();

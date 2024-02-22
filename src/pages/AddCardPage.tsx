@@ -11,5 +11,4 @@ const AddCardPage = () => {
     </section>
   )
 }
-
 export default AddCardPage

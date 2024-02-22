@@ -8,5 +8,4 @@ const Top: React.FC<{headline: string; cardType: string}> = ({headline, cardType
         </div>
     );
 };
-
 export default Top;
