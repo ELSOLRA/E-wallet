@@ -25,6 +25,7 @@ const CardForm: React.FC = () => {
   const [formId, setFormId] = useState<number>(1);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [selectedVendor, setSelectedVendor] = useState<string>('');
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Retrieve the last form ID from local storage
@@ -80,7 +81,14 @@ const CardForm: React.FC = () => {
         [name]: "",
       }));
     }
-  }
+  };
+
+  const handleFormSubmission = (): void => {
+    setFormData((prevFormData) => ({ ...prevFormData, id: formId + 1, cardnumber: "", cardholder: "", validThru: { expiremonth: "", expireyear: "" }, CCV: "", vendor: "" }));
+    setFormId((prevFormId) => prevFormId + 1);
+    setFormErrors({});
+    gotoHomePage('/');
+  };
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 
@@ -112,7 +120,7 @@ const CardForm: React.FC = () => {
       return;
     }
 
-    if (formData.CCV.length !== 3) {
+    if (typeof formData.CCV !== 'string' || formData.CCV.length !== 3) {
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
         CCV: "CCV number must be 3 digits",
@@ -137,32 +145,31 @@ const CardForm: React.FC = () => {
 
     console.log('Form submitted!', newForm);
 
-    const storedForms = localStorage.getItem('forms');
-    const forms: FormData[] = storedForms ? JSON.parse(storedForms) : [];
-    const updatedForms = [...forms, newForm].slice(-MAX_SUBMISSIONS);   // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
-    localStorage.setItem('forms', JSON.stringify(updatedForms));
+   
+    const storedForms = JSON.parse(localStorage.getItem('forms') || '[]');
+
+    if (typeof newForm.CCV === 'number' && String(newForm.CCV).length !== 3) {
+      setFormErrors((prevFormErrors) => ({
+        ...prevFormErrors,
+        CCV: "CCV number must be 3 digits",
+      }));
+      return;
+    }
+
+    if (storedForms.length === MAX_SUBMISSIONS) {
+      setConfirmationMessage("You already have 4 cards. Remove an existing one before adding a new card.");
+
+    } else {
+    const updatedForms = [...storedForms, newForm].slice(-MAX_SUBMISSIONS);
+    localStorage.setItem('forms', JSON.stringify(updatedForms));   // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
+    
     console.log('Saved to local storage:', updatedForms);
 
     localStorage.setItem('lastFormId', String(formId));
     // using this to clear the form data for the next submission
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      id: formId + 1,
-      cardnumber: "",
-      cardholder: "",
-      validThru: {
-        expiremonth: "",
-        expireyear: "",
-      },
-      CCV: "",
-      vendor: "",
-    }));
-
-    setFormId((prevFormId) => prevFormId + 1);
-    setFormErrors({});
-    gotoHomePage('/')
-  }
-
+    handleFormSubmission()
+    }
+}
   const gotoHomePage = useNavigate();
 
   return (
@@ -170,6 +177,16 @@ const CardForm: React.FC = () => {
     <section className="form-container">
 
       <Card cardData={formData} selectedVendor={selectedVendor} />
+
+      {confirmationMessage && (
+        <section className="confirmation-message">
+          <p>{confirmationMessage}</p>
+          <section className="confirmation-buttons">
+            <button onClick={() => { setConfirmationMessage(null); handleFormSubmission(); }}>ACCEPT</button>
+            <button onClick={() => setConfirmationMessage(null)}>CANCEL</button>
+          </section>
+        </section>
+      )}
 
       <form className="card-form" action="" onSubmit={handleSubmit}>
         <FormField
