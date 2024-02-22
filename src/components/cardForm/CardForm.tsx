@@ -84,9 +84,6 @@ const CardForm: React.FC = () => {
   };
 
   const handleFormSubmission = (): void => {
-    setFormData((prevFormData) => ({ ...prevFormData, id: formId + 1, cardnumber: "", cardholder: "", validThru: { expiremonth: "", expireyear: "" }, CCV: "", vendor: "" }));
-    setFormId((prevFormId) => prevFormId + 1);
-    setFormErrors({});
     gotoHomePage('/');
   };
 
@@ -136,6 +133,14 @@ const CardForm: React.FC = () => {
       return;
     }
 
+    if (formData.CCV.length !== 3) {
+      setFormErrors((prevFormErrors) => ({
+        ...prevFormErrors,
+        CCV: "CCV number must be 3 digits",
+      }));
+      return;
+    }
+
     const numericCcv = Number(formData.CCV);
     const newForm = {
       ...formData,
@@ -145,7 +150,6 @@ const CardForm: React.FC = () => {
 
     console.log('Form submitted!', newForm);
 
-   
     const storedForms = JSON.parse(localStorage.getItem('forms') || '[]');
 
     if (typeof newForm.CCV === 'number' && String(newForm.CCV).length !== 3) {
@@ -162,11 +166,13 @@ const CardForm: React.FC = () => {
     } else {
     const updatedForms = [...storedForms, newForm].slice(-MAX_SUBMISSIONS);
     localStorage.setItem('forms', JSON.stringify(updatedForms));   // -MAX_SUBMISSIONS negative index,  includes the last 4 elements (MAX_SUBMISSIONS=4)
-    
     console.log('Saved to local storage:', updatedForms);
-
     localStorage.setItem('lastFormId', String(formId));
+
     // using this to clear the form data for the next submission
+    setFormData((prevFormData) => ({ ...prevFormData, id: formId + 1, cardnumber: "", cardholder: "", validThru: { expiremonth: "", expireyear: "" }, CCV: "", vendor: "" }));
+    setFormId((prevFormId) => prevFormId + 1);
+    setFormErrors({});
     handleFormSubmission()
     }
 }
@@ -182,7 +188,7 @@ const CardForm: React.FC = () => {
         <section className="confirmation-message">
           <p>{confirmationMessage}</p>
           <section className="confirmation-buttons">
-            <button onClick={() => { setConfirmationMessage(null); handleFormSubmission(); }}>ACCEPT</button>
+            <button onClick={() => { setConfirmationMessage(null); handleFormSubmission() }}>ACCEPT</button>
             <button onClick={() => setConfirmationMessage(null)}>CANCEL</button>
           </section>
         </section>
